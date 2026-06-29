@@ -6,6 +6,21 @@ const Landing = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
+  // Background images for cross-fade slideshow
+  const images = [
+    '/assets/img/social/s62-sourdough.jpg',
+    '/assets/img/social/s78-baguettes.jpg',
+    '/assets/img/social/s90-vegetables.jpg'
+  ];
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleCtaClick = () => {
     if (isAuthenticated) {
       navigate('/dashboard');
@@ -19,9 +34,16 @@ const Landing = () => {
       <div className="landing-card">
         <div className="landing-bg"></div>
         
-        {/* Left Column: Image with Ken Burns zoom load and hover */}
+        {/* Left Column: Image with cross-fade slideshow */}
         <div className="landing-photo">
-          <img src="/assets/img/social/s62-sourdough.jpg" alt="Fresh artisan sourdough bread" />
+          {images.map((imgUrl, index) => (
+            <img
+              key={imgUrl}
+              src={imgUrl}
+              alt="Artisan food showcase"
+              className={index === currentImageIndex ? 'active' : ''}
+            />
+          ))}
         </div>
         
         {/* Right Column: Content */}
@@ -109,7 +131,7 @@ const Landing = () => {
           to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* ── Left Column: Full-bleed photo with load-zoom and hover transition ── */
+        /* ── Left Column: Full-bleed photo with cross-fade and zoom transition ── */
         .landing-photo {
           width: 45%;
           height: 100%;
@@ -117,19 +139,23 @@ const Landing = () => {
           position: relative;
         }
         .landing-photo img {
+          position: absolute;
+          inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
           display: block;
-          animation: imageLoadZoom 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-          transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+          opacity: 0;
+          transform: scale(1.06);
+          transition: opacity 1.5s ease-in-out, transform 2s ease-in-out;
         }
-        .landing-photo:hover img {
+        .landing-photo img.active {
+          opacity: 1;
+          transform: scale(1);
+          z-index: 1;
+        }
+        .landing-photo:hover img.active {
           transform: scale(1.05);
-        }
-        @keyframes imageLoadZoom {
-          from { transform: scale(1.12); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
         }
 
         /* ── Right Column: Content with staggered fadeInUp animation ── */

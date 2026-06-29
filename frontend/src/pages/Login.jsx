@@ -11,6 +11,21 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  // Background images for cross-fade slideshow
+  const images = [
+    '/assets/img/social/s62-sourdough.jpg',
+    '/assets/img/social/s78-baguettes.jpg',
+    '/assets/img/social/s90-vegetables.jpg'
+  ];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
@@ -44,7 +59,20 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <div className="login-card glass-panel">
+      {/* Background Slideshow */}
+      <div className="login-slideshow">
+        {images.map((imgUrl, index) => (
+          <img
+            key={imgUrl}
+            src={imgUrl}
+            alt=""
+            className={`login-slide-img ${index === currentImageIndex ? 'active' : ''}`}
+          />
+        ))}
+        <div className="login-slideshow-overlay"></div>
+      </div>
+
+      <div className="login-card glass-panel" style={{ zIndex: 10, background: '#ffffff', boxShadow: '0 20px 50px rgba(90, 58, 26, 0.15)' }}>
         <div className="login-header">
           <div style={{
             width: '52px',
@@ -58,11 +86,11 @@ const Login = () => {
             fontWeight: 700,
             fontSize: '28px',
             margin: '0 auto 16px auto',
-            boxShadow: '0 8px 24px rgba(93, 110, 255, 0.3)'
+            boxShadow: '0 8px 24px var(--primary-glow)'
           }}>
             H
           </div>
-          <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'white' }}>Welcome Back</h2>
+          <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-main)' }}>Welcome Back</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '6px' }}>
             POS & Inventory Management Platform
           </p>
@@ -118,6 +146,35 @@ const Login = () => {
           </button>
         </form>
       </div>
+
+      <style>{`
+        .login-slideshow {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          z-index: 1;
+        }
+        .login-slide-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0;
+          transform: scale(1.05);
+          transition: opacity 1.8s ease-in-out, transform 3s ease-out;
+        }
+        .login-slide-img.active {
+          opacity: 1;
+          transform: scale(1);
+        }
+        .login-slideshow-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(247, 235, 213, 0.68);
+          backdrop-filter: blur(1px);
+        }
+      `}</style>
     </div>
   );
 };
