@@ -30,85 +30,236 @@ const Landing = () => {
   };
 
   return (
-    <div className="landing-stage">
-      <div className="landing-card">
-        <div className="landing-bg"></div>
-        
-        {/* Left Column: Image with cross-fade slideshow */}
-        <div className="landing-photo">
-          {images.map((imgUrl, index) => (
-            <img
-              key={imgUrl}
-              src={imgUrl}
-              alt="Artisan food showcase"
-              className={index === currentImageIndex ? 'active' : ''}
-            />
-          ))}
-        </div>
-        
-        {/* Right Column: Content */}
-        <div className="landing-right">
-          <div className="landing-top-meta">
-            <span>★ @gourmethaven.group</span>
-            <span className="landing-open-pill">Open now</span>
+    <div className="landing-scroll-container">
+      {/* SECTION 1: HERO SPOTLIGHT (1600x900 Split Card) */}
+      <div className="landing-stage">
+        <div className="landing-card">
+          <div className="landing-bg"></div>
+          
+          {/* Left Column: Image with cross-fade slideshow */}
+          <div className="landing-photo">
+            {images.map((imgUrl, index) => (
+              <img
+                key={imgUrl}
+                src={imgUrl}
+                alt="Artisan food showcase"
+                className={index === currentImageIndex ? 'active' : ''}
+              />
+            ))}
           </div>
           
-          <div className="landing-brand">— Gourmet Haven —</div>
-          
-          <h1 className="landing-headline">
-            Gourmet bakes,<br />
-            <em>every</em> morning.
-          </h1>
-          
-          <p className="landing-blurb">
-            Sourdough out at 7am · Croissants at 8 · Cinnamon rolls by 9. We bake everything from scratch in our branch kitchens, every day.
-          </p>
-          
-          <div className="landing-hours-card">
-            <div className="landing-hours-label">— Today's hours —</div>
-            <div className="landing-hours-row">
-              <span>Mon — Thu</span>
-              <strong>7am — 6pm</strong>
+          {/* Right Column: Content */}
+          <div className="landing-right">
+            <div className="landing-top-meta">
+              <span>★ @gourmethaven.group</span>
+              <span className="landing-open-pill">Open now</span>
             </div>
-            <div className="landing-hours-row">
-              <span>Friday</span>
-              <strong>7am — 9pm</strong>
+            
+            <div className="landing-brand">— Gourmet Haven —</div>
+            
+            <h1 className="landing-headline">
+              Gourmet bakes,<br />
+              <em>every</em> morning.
+            </h1>
+            
+            <p className="landing-blurb">
+              Sourdough out at 7am · Croissants at 8 · Cinnamon rolls by 9. We bake everything from scratch in our branch kitchens, every day.
+            </p>
+            
+            <div className="landing-hours-card">
+              <div className="landing-hours-label">— Today's hours —</div>
+              <div className="landing-hours-row">
+                <span>Mon — Thu</span>
+                <strong>7am — 6pm</strong>
+              </div>
+              <div className="landing-hours-row">
+                <span>Friday</span>
+                <strong>7am — 9pm</strong>
+              </div>
+              <div className="landing-hours-row">
+                <span>Sat — Sun</span>
+                <strong>8am — 9pm</strong>
+              </div>
             </div>
-            <div className="landing-hours-row">
-              <span>Sat — Sun</span>
-              <strong>8am — 9pm</strong>
+            
+            <div className="landing-footer">
+              <span>📍 Downtown Bistro & Uptown Café</span>
+              <button className="landing-cta" onClick={handleCtaClick}>
+                {isAuthenticated ? (
+                  <span>Go to Portal <span className="landing-arrow">→</span></span>
+                ) : (
+                  <span>Login / Portal <span className="landing-arrow">→</span></span>
+                )}
+              </button>
             </div>
-          </div>
-          
-          <div className="landing-footer">
-            <span>📍 Downtown Bistro & Uptown Café</span>
-            <button className="landing-cta" onClick={handleCtaClick}>
-              {isAuthenticated ? (
-                <span>Go to Portal <span className="landing-arrow">→</span></span>
-              ) : (
-                <span>Login / Portal <span className="landing-arrow">→</span></span>
-              )}
-            </button>
           </div>
         </div>
       </div>
 
+      {/* SECTION 2: BRAND STORY & HERITAGE */}
+      <section className="landing-details-section">
+        <div className="landing-details-container">
+          <div className="landing-section-header">
+            <h2 className="landing-section-title">Our Heritage & Craft</h2>
+            <div className="landing-section-divider"></div>
+            <p className="landing-section-subtitle">It's the Simple Pleasures in Life</p>
+          </div>
+
+          <div className="landing-story-block">
+            <div className="landing-story-content">
+              <h3>Traditional Baking, Refined Taste</h3>
+              <p>
+                At Gourmet Haven, we believe great food begins with authentic ingredients and raw passion. Every single loaf of bread we pull from our stone hearths is fermented using our wild 100-year-old starter, hand-shaped, and cold-proofed for 24 hours to yield the ultimate crispy blistered crust and rich sourdough tang.
+              </p>
+              <p>
+                Whether it is our signature croissants layered with French butter or our robust stone-ground whole wheat bakes, we bake everything from scratch daily in our branch kitchens. No chemical improvers, no stabilizers—just flour, water, sea salt, and pure love.
+              </p>
+            </div>
+            <div className="landing-story-badge">
+              <div className="badge-inner">
+                <span className="badge-num">100%</span>
+                <span className="badge-label">Artisan Organic</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: CRAFTSMANSHIP HIGHLIGHTS (4 Cards Grid) */}
+      <section className="landing-details-section" style={{ background: '#fef8f0' }}>
+        <div className="landing-details-container">
+          <div className="landing-section-header">
+            <h2 className="landing-section-title">Our Baking Philosophy</h2>
+            <div className="landing-section-divider" style={{ background: '#fdb44b' }}></div>
+            <p className="landing-section-subtitle">Crafted With Honesty & Natural Grains</p>
+          </div>
+
+          <div className="landing-philosophy-grid">
+            <div className="philosophy-card">
+              <div className="philosophy-icon">🌾</div>
+              <h3>100% Organic Flour</h3>
+              <p>We source stone-ground heirloom grains exclusively from local family mills. Wholesome and unbleached.</p>
+            </div>
+
+            <div className="philosophy-card">
+              <div className="philosophy-icon">⏰</div>
+              <h3>24h Slow Ferment</h3>
+              <p>Time is our secret ingredient. Our cold rises develop complex wheat sugars and yield open, elastic crumbs.</p>
+            </div>
+
+            <div className="philosophy-card">
+              <div className="philosophy-icon">🍃</div>
+              <h3>Wild Starters</h3>
+              <p>Our doughs rely solely on natural wild starters fed daily. No commercial yeasts, yielding classic lacto-flavor.</p>
+            </div>
+
+            <div className="philosophy-card">
+              <div className="philosophy-icon">🛡️</div>
+              <h3>Zero Additives</h3>
+              <p>Clean label bakes made without artificial dough conditioners, preservatives, or GMO products.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: WEEKLY SPECIALS SHOWCASE (3 Product Cards) */}
+      <section className="landing-details-section">
+        <div className="landing-details-container">
+          <div className="landing-section-header">
+            <h2 className="landing-section-title">Weekly Specials</h2>
+            <div className="landing-section-divider"></div>
+            <p className="landing-section-subtitle">Freshly Baked Morning Favorites</p>
+          </div>
+
+          <div className="landing-specials-grid">
+            <div className="special-card">
+              <div className="special-card-image">
+                <img src="/assets/img/social/s62-sourdough.jpg" alt="Artisan Sourdough" />
+                <span className="special-badge">Signature 🌟</span>
+              </div>
+              <div className="special-card-info">
+                <h3>Artisan Sourdough Loaf</h3>
+                <p>Crispy, blistered crust with a soft, moist elastic crumb. Fermented 24 hours for a balanced sourdough tang.</p>
+                <div className="special-card-rating">
+                  <span>⭐⭐⭐⭐⭐</span>
+                  <span className="rating-num">4.9 (142 reviews)</span>
+                </div>
+                <div className="special-card-footer">
+                  <span className="special-price">₹450.00</span>
+                  <button className="special-btn" onClick={handleCtaClick}>Order Now</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="special-card">
+              <div className="special-card-image">
+                <img src="/assets/img/social/s78-baguettes.jpg" alt="French Baguettes" />
+                <span className="special-badge" style={{ background: '#52c1e8' }}>Bestseller 🔥</span>
+              </div>
+              <div className="special-card-info">
+                <h3>Crispy French Baguette</h3>
+                <p>Traditional Parisian bread. Extremely crisp crust, light aerated interior, and rich toasted-grain aroma.</p>
+                <div className="special-card-rating">
+                  <span>⭐⭐⭐⭐⭐</span>
+                  <span className="rating-num">4.8 (98 reviews)</span>
+                </div>
+                <div className="special-card-footer">
+                  <span className="special-price">₹180.00</span>
+                  <button className="special-btn" onClick={handleCtaClick}>Order Now</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="special-card">
+              <div className="special-card-image">
+                <img src="/assets/img/social/s90-vegetables.jpg" alt="Bistro Quinoa Salad" />
+                <span className="special-badge" style={{ background: '#7ed9a3' }}>Healthy 🌾</span>
+              </div>
+              <div className="special-card-info">
+                <h3>Bistro Quinoa Salad Bowl</h3>
+                <p>Fresh organic greens, tri-color quinoa, roasted root vegetables, and toasted seeds tossed in olive oil vinaigrette.</p>
+                <div className="special-card-rating">
+                  <span>⭐⭐⭐⭐⭐</span>
+                  <span className="rating-num">5.0 (64 reviews)</span>
+                </div>
+                <div className="special-card-footer">
+                  <span className="special-price">₹480.00</span>
+                  <button className="special-btn" onClick={handleCtaClick}>Order Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER CALL-TO-ACTION */}
+      <footer className="landing-page-footer">
+        <p>© 2026 Gourmet Haven Group. Crafted under Sunshine Theme. All rights reserved.</p>
+      </footer>
+
       <style>{`
-        /* ── Fullscreen Viewport stage ── */
-        .landing-stage {
-          margin: 0;
-          padding: 0;
-          background: #0a0a0a;
+        /* ── Scroll Container stage ── */
+        .landing-scroll-container {
+          background: #fffbf5;
           width: 100vw;
+          min-height: 100vh;
+          overflow-x: hidden;
+          overflow-y: auto;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #2d3436;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Fullscreen Hero Section ── */
+        .landing-stage {
+          width: 100%;
           height: 100vh;
-          overflow: hidden;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          color: #1a1a2e;
-          -webkit-font-smoothing: antialiased;
-          text-rendering: optimizeLegibility;
+          background: #0a0a0a;
+          padding: 20px;
+          box-sizing: border-box;
         }
 
         /* ── Fixed aspect-ratio 1600x900 social card layout ── */
@@ -131,7 +282,7 @@ const Landing = () => {
           to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* ── Left Column: Full-bleed photo with cross-fade and zoom transition ── */
+        /* ── Left Column: Full-bleed photo slideshow with cross-fade ── */
         .landing-photo {
           width: 45%;
           height: 100%;
@@ -171,7 +322,6 @@ const Landing = () => {
           z-index: 2;
         }
 
-        /* Staggered entrance for all content elements */
         .landing-top-meta {
           display: flex;
           justify-content: space-between;
@@ -253,7 +403,6 @@ const Landing = () => {
           to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── Pulsing "Open now" pill ── */
         .landing-open-pill {
           display: inline-flex;
           align-items: center;
@@ -301,7 +450,6 @@ const Landing = () => {
           font-size: 16px;
         }
 
-        /* ── Footer Address and CTA Button ── */
         .landing-cta {
           background: #e63946;
           color: #fff;
@@ -331,6 +479,257 @@ const Landing = () => {
           transform: translateX(4px);
         }
 
+        /* ── SECTION STYLING (Story, Philosophy, Specials) ── */
+        .landing-details-section {
+          padding: 80px 24px;
+          background: #fffbf5;
+          display: flex;
+          justify-content: center;
+        }
+        .landing-details-container {
+          width: 100%;
+          max-width: 1200px;
+        }
+        .landing-section-header {
+          text-align: center;
+          margin-bottom: 48px;
+        }
+        .landing-section-title {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 800;
+          font-size: 32px;
+          color: #5a3a1a;
+          margin: 0;
+        }
+        .landing-section-divider {
+          width: 60px;
+          height: 3px;
+          background: #e63946;
+          margin: 12px auto;
+          border-radius: 2px;
+        }
+        .landing-section-subtitle {
+          font-family: 'Caveat', cursive;
+          font-size: 24px;
+          color: #8a6e54;
+          margin: 0;
+        }
+
+        /* ── Story Section Block ── */
+        .landing-story-block {
+          display: flex;
+          align-items: center;
+          gap: 60px;
+          margin-top: 20px;
+        }
+        .landing-story-content {
+          flex: 1.5;
+        }
+        .landing-story-content h3 {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+          font-size: 24px;
+          color: #5a3a1a;
+          margin-top: 0;
+          margin-bottom: 16px;
+        }
+        .landing-story-content p {
+          font-size: 15px;
+          line-height: 1.6;
+          color: #636e72;
+          margin-bottom: 16px;
+        }
+        .landing-story-badge {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+        }
+        .badge-inner {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          border: 3px dashed rgba(90, 58, 26, 0.25);
+          background: #ffffff;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 10px 30px rgba(90, 58, 26, 0.05);
+        }
+        .badge-num {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 900;
+          font-size: 42px;
+          color: #e63946;
+          line-height: 1;
+        }
+        .badge-label {
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #8a6e54;
+          margin-top: 6px;
+        }
+
+        /* ── Philosophy 4-Card Grid ── */
+        .landing-philosophy-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 24px;
+        }
+        .philosophy-card {
+          background: #ffffff;
+          border-radius: 16px;
+          padding: 32px 24px;
+          border: 1px solid #e8dcc8;
+          box-shadow: 0 4px 20px rgba(253, 180, 75, 0.05);
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+          text-align: center;
+        }
+        .philosophy-card:hover {
+          transform: translateY(-8px) rotate(1deg);
+          box-shadow: 0 12px 30px rgba(253, 180, 75, 0.22);
+          border-color: #fdb44b;
+        }
+        .philosophy-icon {
+          font-size: 40px;
+          margin-bottom: 16px;
+        }
+        .philosophy-card h3 {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+          font-size: 18px;
+          color: #5a3a1a;
+          margin-top: 0;
+          margin-bottom: 12px;
+        }
+        .philosophy-card p {
+          font-size: 14px;
+          line-height: 1.5;
+          color: #636e72;
+          margin: 0;
+        }
+
+        /* ── Specials 3-Card Grid ── */
+        .landing-specials-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 30px;
+        }
+        .special-card {
+          background: #ffffff;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid #e8dcc8;
+          box-shadow: 0 4px 20px rgba(253, 180, 75, 0.05);
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+          display: flex;
+          flex-direction: column;
+        }
+        .special-card:hover {
+          transform: translateY(-8px) rotate(1deg);
+          box-shadow: 0 12px 30px rgba(253, 180, 75, 0.22);
+          border-color: #fdb44b;
+        }
+        .special-card-image {
+          position: relative;
+          height: 220px;
+          overflow: hidden;
+        }
+        .special-card-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.6s ease;
+        }
+        .special-card:hover .special-card-image img {
+          transform: scale(1.1) rotate(1deg);
+        }
+        .special-badge {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 11px;
+          font-weight: 700;
+          color: white;
+          background: #e63946;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .special-card-info {
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+        .special-card-info h3 {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+          font-size: 18px;
+          color: #5a3a1a;
+          margin-top: 0;
+          margin-bottom: 8px;
+        }
+        .special-card-info p {
+          font-size: 14px;
+          line-height: 1.5;
+          color: #636e72;
+          margin-top: 0;
+          margin-bottom: 12px;
+          flex-grow: 1;
+        }
+        .special-card-rating {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 16px;
+          font-size: 13px;
+        }
+        .rating-num {
+          color: #8a6e54;
+          font-weight: 500;
+        }
+        .special-card-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-top: 1px solid #e8dcc8;
+          padding-top: 16px;
+          margin-top: auto;
+        }
+        .special-price {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 800;
+          font-size: 18px;
+          color: #e63946;
+        }
+        .special-btn {
+          background: #fdb44b;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 13px;
+          cursor: pointer;
+          transition: background 0.25s ease;
+        }
+        .special-btn:hover {
+          background: #ff9f43;
+        }
+
+        /* ── Simple footer ── */
+        .landing-page-footer {
+          background: #fef8f0;
+          padding: 40px 24px;
+          text-align: center;
+          font-size: 13px;
+          color: #8a6e54;
+          border-top: 1px solid #e8dcc8;
+        }
+
         /* ── Responsive Styling ── */
         @media (max-width: 1024px) {
           .landing-card {
@@ -347,11 +746,16 @@ const Landing = () => {
             padding: 40px 30px;
           }
           .landing-stage {
-            overflow-y: auto;
-            align-items: flex-start;
+            height: auto;
+            min-height: 100vh;
+            padding: 10px;
           }
           .landing-headline {
             font-size: 52px;
+          }
+          .landing-story-block {
+            flex-direction: column;
+            gap: 30px;
           }
         }
       `}</style>

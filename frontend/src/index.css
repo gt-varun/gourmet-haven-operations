@@ -1,34 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #fcf7ed;               /* Warm Cream screen background */
-  --bg-panel: #ffffff;              /* Clean White panel background */
-  --bg-card: #fdfaf2;               /* Slightly lighter warm cream card background */
+  --bg-dark: #fbfbfc;               /* Clean white screen background for visibility */
+  --bg-panel: #ffffff;              /* Pure White panel background */
+  --bg-card: #ffffff;               /* Pure White card background */
   --bg-input: #ffffff;              /* Input fields background */
-  --border-glow: rgba(90, 58, 26, 0.15); /* Soft brown border */
-  --border-focus: #e63946;          /* Red accent border on focus */
+  --border-glow: #e8dcc8;           /* Muted warm beige divider lines */
+  --border-focus: #fdb44b;          /* Golden sunshine yellow focus */
   
-  --primary: #e63946;               /* Brand Red as primary color */
-  --primary-glow: rgba(230, 57, 70, 0.15);
-  --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%);
-  --gradient-card: linear-gradient(145deg, #ffffff 0%, #fdfaf2 100%);
+  --primary: #fdb44b;               /* Golden sunshine primary color */
+  --primary-glow: rgba(253, 180, 75, 0.18);
+  --gradient-accent: linear-gradient(135deg, #fdb44b 0%, #ff9f43 100%); /* Gold to warm orange */
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, #fffbf5 100%);
   
-  --text-main: #5a3a1a;             /* Deep warm brown text */
-  --text-muted: #8a6e54;            /* Muted warm brown text */
+  --text-main: #2d3436;             /* Crisp dark charcoal gray for high legibility */
+  --text-muted: #636e72;            /* Secondary medium gray text */
   --text-dark: #1f2937;
   
-  --success: #2eb872;               /* Brand Green */
-  --success-glow: rgba(46, 184, 114, 0.15);
+  --success: #7ed9a3;               /* Mint Green for success */
+  --success-glow: rgba(126, 217, 163, 0.15);
   --warning: #fbbf24;
   --warning-glow: rgba(251, 191, 36, 0.15);
-  --danger: #e63946;
-  --danger-glow: rgba(230, 57, 70, 0.15);
+  --danger: #ff6b81;                /* Coral pink for danger warnings */
+  --danger-glow: rgba(255, 107, 129, 0.15);
 
   --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --shadow-neon: 0 8px 32px 0 rgba(90, 58, 26, 0.08); /* Soft shadows */
-  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+  --shadow-neon: 0 4px 20px rgba(253, 180, 75, 0.08); /* Soft shadows */
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 }
 
 * {
@@ -86,7 +86,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   border-right: 1px solid var(--border-glow);
   padding: 24px 16px;
-  background: #fdfaf2;
+  background: #ffffff;
 }
 
 .logo-container {
@@ -225,9 +225,9 @@ h1, h2, h3, h4, h5, h6 {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at top right, rgba(230, 57, 70, 0.03), transparent 50%),
-              radial-gradient(circle at bottom left, rgba(138, 110, 84, 0.02), transparent 50%),
-              #fcf7ed;
+  background: radial-gradient(circle at top right, rgba(253, 180, 75, 0.03), transparent 50%),
+              radial-gradient(circle at bottom left, rgba(82, 193, 232, 0.02), transparent 50%),
+              #fbfbfc;
   padding: 32px;
   height: 100vh;
   overflow-y: auto;
@@ -560,6 +560,18 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   cursor: pointer;
   height: 155px;
+  background: #ffffff;
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(253, 180, 75, 0.05);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) rotate(1deg);
+  border-color: var(--primary);
+  box-shadow: 0 12px 30px rgba(253, 180, 75, 0.22);
 }
 
 .product-name {
