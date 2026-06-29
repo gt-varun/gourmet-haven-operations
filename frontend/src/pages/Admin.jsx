@@ -10,7 +10,8 @@ import {
   RefreshCw,
   Search,
   X,
-  Store
+  Store,
+  Beef
 } from 'lucide-react';
 
 const Admin = () => {
@@ -182,6 +183,25 @@ const Admin = () => {
     }
   };
 
+  // Inline toggle ingredients access for a cashier
+  const handleToggleIngredients = async (userId, currentValue) => {
+    try {
+      const res = await fetch(`/api/users/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ hasIngredientsAccess: !currentValue }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchUsers();
+      } else {
+        alert(data.message || 'Error toggling permission');
+      }
+    } catch (err) {
+      alert('Network error');
+    }
+  };
+
   return (
     <div>
       <div className="header-container">
@@ -247,6 +267,7 @@ const Admin = () => {
                 <th>Email Address</th>
                 <th>Role Badge</th>
                 <th>Branch Assignment</th>
+                <th style={{ textAlign: 'center' }}>Ingredients Access</th>
                 <th>Joined Date</th>
                 <th style={{ textAlign: 'center' }}>Actions</th>
               </tr>
@@ -282,6 +303,21 @@ const Admin = () => {
                         <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '14px' }}>
                           <Store size={12} style={{ color: 'var(--text-muted)' }} />
                           {u.branchId?.name || 'Unassigned'}
+                        </span>
+                      )}
+                    </td>
+                    <td style={{ textAlign: 'center' }}>
+                      {u.role === 'CASHIER' ? (
+                        <button
+                          className={`toggle-switch ${u.hasIngredientsAccess ? 'active' : ''}`}
+                          onClick={() => handleToggleIngredients(u._id, u.hasIngredientsAccess)}
+                          title={u.hasIngredientsAccess ? 'Revoke Ingredients Access' : 'Grant Ingredients Access'}
+                        >
+                          <span className="toggle-knob" />
+                        </button>
+                      ) : (
+                        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                          {u.role === 'SUPER_ADMIN' || u.role === 'ADMIN' ? 'Full Access' : '—'}
                         </span>
                       )}
                     </td>

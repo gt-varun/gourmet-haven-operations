@@ -16,6 +16,7 @@ const Ingredients = () => {
   const { user } = useAuth();
   const [ingredients, setIngredients] = useState([]);
   const [branches, setBranches] = useState([]);
+  const [selectedBranchId, setSelectedBranchId] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -38,7 +39,10 @@ const Ingredients = () => {
     try {
       setLoading(true);
       setError('');
-      const res = await fetch('/api/ingredients');
+      const branchParam = user.role === 'SUPER_ADMIN' && selectedBranchId
+        ? `?branchId=${selectedBranchId}`
+        : '';
+      const res = await fetch(`/api/ingredients${branchParam}`);
       const data = await res.json();
       if (data.success) {
         setIngredients(data.ingredients);
@@ -50,15 +54,16 @@ const Ingredients = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [user.role, selectedBranchId]);
 
   // Fetch branches if SUPER_ADMIN
   const fetchBranches = async () => {
     try {
       const res = await fetch('/api/branches');
       const data = await res.json();
-      if (data.success) {
+      if (data.success && data.branches.length > 0) {
         setBranches(data.branches);
+        setSelectedBranchId(data.branches[0]._id); // Auto-select first branch
       }
     } catch (err) {
       console.error(err);
@@ -66,11 +71,18 @@ const Ingredients = () => {
   };
 
   useEffect(() => {
-    fetchIngredients();
     if (user.role === 'SUPER_ADMIN') {
       fetchBranches();
+    } else {
+      fetchIngredients();
     }
-  }, [user.role, fetchIngredients]);
+  }, [user.role]);
+
+  useEffect(() => {
+    if (user.role === 'SUPER_ADMIN' && selectedBranchId) {
+      fetchIngredients();
+    }
+  }, [selectedBranchId, fetchIngredients, user.role]);
 
   // Open Add Modal
   const openAddModal = () => {
@@ -78,7 +90,7 @@ const Ingredients = () => {
       name: '',
       quantity: '',
       unit: 'kg',
-      branchId: user.role === 'SUPER_ADMIN' ? '' : user.branchId?._id || '',
+      branchId: user.role === 'SUPER_ADMIN' ? selectedBranchId : (user.branchId?._id || ''),
     });
     setShowAddModal(true);
   };
@@ -183,6 +195,22 @@ const Ingredients = () => {
           </button>
         </div>
       </div>
+
+      {user.role === 'SUPER_ADMIN' && (
+        <div className="branch-selector-bar">
+          <Store size={16} style={{ color: 'var(--primary)' }} />
+          <label>Viewing Branch:</label>
+          <select
+            className="form-select"
+            value={selectedBranchId}
+            onChange={(e) => setSelectedBranchId(e.target.value)}
+          >
+            {branches.map((b) => (
+              <option key={b._id} value={b._id}>{b.name}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {error && (
         <div className="alert-banner alert-banner-danger">

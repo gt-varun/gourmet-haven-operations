@@ -10,12 +10,15 @@ import {
   CreditCard,
   Printer,
   X,
-  AlertTriangle
+  AlertTriangle,
+  Store
 } from 'lucide-react';
 
 const POS = () => {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
+  const [branches, setBranches] = useState([]);
+  const [selectedBranchId, setSelectedBranchId] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [cart, setCart] = useState([]);
@@ -25,10 +28,27 @@ const POS = () => {
   const [checkoutError, setCheckoutError] = useState('');
   const [receiptOrder, setReceiptOrder] = useState(null);
 
+  // Fetch branches for SUPER_ADMIN
+  const fetchBranches = async () => {
+    try {
+      const res = await fetch('/api/branches');
+      const data = await res.json();
+      if (data.success && data.branches.length > 0) {
+        setBranches(data.branches);
+        setSelectedBranchId(data.branches[0]._id); // Auto-select first branch
+      }
+    } catch (err) {
+      console.error('Error fetching branches:', err);
+    }
+  };
+
   // Fetch products for the branch
   const fetchProducts = useCallback(async () => {
     try {
-      const res = await fetch('/api/products');
+      const branchParam = user.role === 'SUPER_ADMIN' && selectedBranchId
+        ? `?branchId=${selectedBranchId}`
+        : '';
+      const res = await fetch(`/api/products${branchParam}`);
       const data = await res.json();
       if (data.success) {
         setProducts(data.products);
@@ -36,11 +56,21 @@ const POS = () => {
     } catch (err) {
       console.error('Error fetching products:', err);
     }
-  }, []);
+  }, [user.role, selectedBranchId]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    if (user.role === 'SUPER_ADMIN') {
+      fetchBranches();
+    }
+  }, [user.role]);
+
+  useEffect(() => {
+    // For non-SUPER_ADMIN, fetch right away. For SUPER_ADMIN, wait for a branch to be selected.
+    if (user.role !== 'SUPER_ADMIN' || selectedBranchId) {
+      fetchProducts();
+      setCart([]); // Clear cart on branch change
+    }
+  }, [fetchProducts, user.role, selectedBranchId]);
 
   // Extract unique categories
   const categories = useMemo(() => {
@@ -150,6 +180,7 @@ const POS = () => {
           method: paymentMethod,
           amount: cartTotals.grandTotal,
         },
+        ...(user.role === 'SUPER_ADMIN' && selectedBranchId ? { branchId: selectedBranchId } : {}),
       };
 
       const res = await fetch('/api/billing/checkout', {
@@ -196,6 +227,22 @@ const POS = () => {
           <p className="header-subtitle">Select items to add to the order</p>
         </div>
       </div>
+
+      {user.role === 'SUPER_ADMIN' && (
+        <div className="branch-selector-bar">
+          <Store size={16} style={{ color: 'var(--primary)' }} />
+          <label>Operating Branch:</label>
+          <select
+            className="form-select"
+            value={selectedBranchId}
+            onChange={(e) => setSelectedBranchId(e.target.value)}
+          >
+            {branches.map((b) => (
+              <option key={b._id} value={b._id}>{b.name}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {checkoutError && (
         <div className="alert-banner alert-banner-danger">
