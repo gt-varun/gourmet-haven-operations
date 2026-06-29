@@ -87,8 +87,8 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border-glow);
+  background: #fffbf5; /* Matched to landing page header background */
+  border-bottom: 1px solid #e8dcc8; /* Matched to landing border */
   position: sticky;
   top: 0;
   z-index: 100;
@@ -232,7 +232,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   background: radial-gradient(circle at top right, rgba(230, 57, 70, 0.02), transparent 50%),
               radial-gradient(circle at bottom left, rgba(90, 58, 26, 0.01), transparent 50%),
-              #f7ebd5; /* Restored Warm Cream background */
+              #fffbf5; /* Matched to landing page main background */
   padding: 32px;
   height: calc(100vh - 72px);
   overflow-y: auto;
@@ -356,10 +356,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .custom-table th {
   padding: 14px 20px;
-  background: #fdfaf2;
-  font-weight: 600;
+  background: #f7ebd5; /* Matched to honey-wheat cream */
+  font-weight: 700;
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-main);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid var(--border-glow);
@@ -378,7 +378,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .custom-table tr:hover td {
-  background: rgba(90, 58, 26, 0.02);
+  background: #fef8f0; /* Soft warm white cream */
 }
 
 /* Alert Notification Drawer & Low Stock Items */
