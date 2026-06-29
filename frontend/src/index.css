@@ -1,33 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #fbfbfc;               /* Clean white screen background for visibility */
+  --bg-dark: #fcf8f2;               /* Soft warm cream screen background for coherence */
   --bg-panel: #ffffff;              /* Pure White panel background */
   --bg-card: #ffffff;               /* Pure White card background */
   --bg-input: #ffffff;              /* Input fields background */
-  --border-glow: #e8dcc8;           /* Muted warm beige divider lines */
-  --border-focus: #fdb44b;          /* Golden sunshine yellow focus */
+  --border-glow: rgba(90, 58, 26, 0.12); /* Muted warm beige divider lines */
+  --border-focus: #e63946;          /* Red accent focus */
   
-  --primary: #fdb44b;               /* Golden sunshine primary color */
-  --primary-glow: rgba(253, 180, 75, 0.18);
-  --gradient-accent: linear-gradient(135deg, #fdb44b 0%, #ff9f43 100%); /* Gold to warm orange */
+  --primary: #e63946;               /* Crimson Red primary color (matched to landing) */
+  --primary-glow: rgba(230, 57, 70, 0.12);
+  --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%); /* Crimson Red to soft red */
   --gradient-card: linear-gradient(145deg, #ffffff 0%, #fffbf5 100%);
   
-  --text-main: #2d3436;             /* Crisp dark charcoal gray for high legibility */
-  --text-muted: #636e72;            /* Secondary medium gray text */
+  --text-main: #5a3a1a;             /* Deep warm brown text (matched to landing) */
+  --text-muted: #8a6e54;            /* Secondary warm brown text */
   --text-dark: #1f2937;
   
   --success: #7ed9a3;               /* Mint Green for success */
   --success-glow: rgba(126, 217, 163, 0.15);
   --warning: #fbbf24;
   --warning-glow: rgba(251, 191, 36, 0.15);
-  --danger: #ff6b81;                /* Coral pink for danger warnings */
-  --danger-glow: rgba(255, 107, 129, 0.15);
+  --danger: #e63946;
+  --danger-glow: rgba(230, 57, 70, 0.15);
 
   --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --shadow-neon: 0 4px 20px rgba(253, 180, 75, 0.08); /* Soft shadows */
+  --shadow-neon: 0 4px 20px rgba(90, 58, 26, 0.06); /* Soft warm shadows */
   --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 }
 
@@ -574,9 +574,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .product-card:hover {
-  transform: translateY(-8px) rotate(1deg);
+  transform: translateY(-8px);
   border-color: var(--primary);
-  box-shadow: 0 12px 30px rgba(253, 180, 75, 0.22);
+  box-shadow: 0 12px 30px var(--primary-glow);
 }
 
 .product-name {

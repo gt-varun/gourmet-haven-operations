@@ -335,29 +335,27 @@ const Landing = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #0a0a0a;
-          padding: 20px;
+          background: #fffbf5; /* Removed dark background, match theme */
+          padding: 0; /* Removed padding to get rid of the border frame */
           box-sizing: border-box;
         }
 
-        /* ── Fixed aspect-ratio 1600x900 social card layout ── */
+        /* ── Full-bleed premium split layout ── */
         .landing-card {
           position: relative;
           overflow: hidden;
           width: 100%;
-          max-width: 1600px;
           height: 100%;
-          max-height: 900px;
-          box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 4px 14px rgba(0,0,0,.3);
           display: flex;
           background: #f7ebd5;
           opacity: 0;
+          border-bottom: 1px solid #e8dcc8;
           animation: cardEntrance 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         @keyframes cardEntrance {
-          from { opacity: 0; transform: scale(0.96) translateY(20px); }
-          to { opacity: 1; transform: scale(1) translateY(0); }
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         /* ── Left Column: Full-bleed photo slideshow with cross-fade ── */
@@ -376,7 +374,7 @@ const Landing = () => {
           display: block;
           opacity: 0;
           transform: scale(1.06);
-          transition: opacity 1.5s ease-in-out, transform 2s ease-in-out;
+          transition: opacity 1.5s ease-in-out, transform 2.5s ease-in-out;
         }
         .landing-photo img.active {
           opacity: 1;
@@ -384,10 +382,10 @@ const Landing = () => {
           z-index: 1;
         }
         .landing-photo:hover img.active {
-          transform: scale(1.05);
+          transform: scale(1.04);
         }
 
-        /* ── Right Column: Content with staggered fadeInUp animation ── */
+        /* ── Right Column: Content ── */
         .landing-right {
           width: 55%;
           height: 100%;
@@ -433,11 +431,35 @@ const Landing = () => {
           color: #5a3a1a;
           margin: 0;
           opacity: 0;
-          animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+          animation: headlineEntrance 1.5s cubic-bezier(0.19, 1, 0.22, 1) 0.4s forwards;
+        }
+        @keyframes headlineEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(35px) skewY(1deg);
+            filter: blur(4px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) skewY(0);
+            filter: blur(0);
+          }
         }
         .landing-headline em {
+          display: inline-block;
           font-style: italic;
           color: #e63946;
+          animation: emphasisPulse 2.8s ease-in-out infinite alternate;
+        }
+        @keyframes emphasisPulse {
+          0% {
+            transform: scale(1);
+            text-shadow: 0 0 0px rgba(230, 57, 70, 0);
+          }
+          100% {
+            transform: scale(1.03);
+            text-shadow: 0 4px 15px rgba(230, 57, 70, 0.2);
+          }
         }
 
         .landing-blurb {
