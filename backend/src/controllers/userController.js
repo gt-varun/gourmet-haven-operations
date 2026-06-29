@@ -47,7 +47,7 @@ const getUsers = async (req, res) => {
 // @access  Private (SUPER_ADMIN, ADMIN)
 const createUser = async (req, res) => {
   try {
-    const { name, email, password, role, branchId } = req.body;
+        const { name, email, password, role, branchId, hasIngredientsAccess } = req.body;
     const actor = req.user;
 
     if (!name || !email || !password || !role) {
@@ -77,6 +77,7 @@ const createUser = async (req, res) => {
         existingUser.password = password;
         existingUser.role = role;
         existingUser.branchId = actor.role === 'ADMIN' ? actor.branchId : (branchId || null);
+        existingUser.hasIngredientsAccess = role === 'CASHIER' ? !!hasIngredientsAccess : false;
         await existingUser.save();
 
         await writeAuditLog({
@@ -101,6 +102,7 @@ const createUser = async (req, res) => {
       password,
       role,
       branchId: actor.role === 'ADMIN' ? actor.branchId : (branchId || null),
+      hasIngredientsAccess: role === 'CASHIER' ? !!hasIngredientsAccess : false,
     });
 
     // Write Audit Log
@@ -125,7 +127,7 @@ const createUser = async (req, res) => {
 // @access  Private (SUPER_ADMIN, ADMIN)
 const updateUser = async (req, res) => {
   try {
-    const { name, email, role, branchId, password } = req.body;
+    const { name, email, role, branchId, password, hasIngredientsAccess } = req.body;
     const actor = req.user;
 
     const userToUpdate = await User.findOne({ _id: req.params.id, isDeleted: false });
@@ -164,6 +166,25 @@ const updateUser = async (req, res) => {
       if (role) userToUpdate.role = role;
       if (branchId !== undefined) {
         userToUpdate.branchId = role === 'SUPER_ADMIN' ? null : branchId;
+      }
+    }
+
+    // Handle ingredients permission change for Cashiers
+    if (hasIngredientsAccess !== undefined && userToUpdate.role === 'CASHIER') {
+      const oldAccess = userToUpdate.hasIngredientsAccess;
+      const newAccess = !!hasIngredientsAccess;
+      if (oldAccess !== newAccess) {
+        userToUpdate.hasIngredientsAccess = newAccess;
+        await writeAuditLog({
+          actor,
+          action: 'ROLE_CHANGE',
+          entityId: userToUpdate._id,
+          branchId: userToUpdate.branchId,
+          metadata: {
+            email: userToUpdate.email,
+            action: newAccess ? 'GRANT_INGREDIENTS' : 'REVOKE_INGREDIENTS',
+          },
+        });
       }
     }
 

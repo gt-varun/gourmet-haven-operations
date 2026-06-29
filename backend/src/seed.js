@@ -8,6 +8,7 @@ const User = require('./models/User');
 const Product = require('./models/Product');
 const Order = require('./models/Order');
 const AuditLog = require('./models/AuditLog');
+const Ingredient = require('./models/Ingredient');
 
 const seedData = async () => {
   try {
@@ -23,6 +24,7 @@ const seedData = async () => {
     await Product.deleteMany({});
     await Order.deleteMany({});
     await AuditLog.deleteMany({});
+    await Ingredient.deleteMany({});
 
     console.log('Old data cleared.');
 
@@ -177,6 +179,25 @@ const seedData = async () => {
 
     const products = await Product.create([...productsBranch1, ...productsBranch2]);
     console.log(`Created ${products.length} menu items across both branches.`);
+
+    // 5. Seed Ingredients
+    const ingredientsBranch1 = [
+      { name: 'Sugar', quantity: 10, unit: 'kg', branchId: branch1._id },
+      { name: 'Fruits', quantity: 5, unit: 'kg', branchId: branch1._id },
+      { name: 'Chicken', quantity: 20, unit: 'kg', branchId: branch1._id },
+      { name: 'Curd', quantity: 8, unit: 'kg', branchId: branch1._id },
+      { name: 'Milk', quantity: 15, unit: 'L', branchId: branch1._id },
+    ];
+
+    const ingredientsBranch2 = [
+      { name: 'Sugar', quantity: 12, unit: 'kg', branchId: branch2._id },
+      { name: 'Milk', quantity: 30, unit: 'L', branchId: branch2._id },
+      { name: 'Fruits', quantity: 8, unit: 'kg', branchId: branch2._id },
+      { name: 'Coffee Beans', quantity: 25, unit: 'kg', branchId: branch2._id },
+    ];
+
+    const ingredients = await Ingredient.create([...ingredientsBranch1, ...ingredientsBranch2]);
+    console.log(`Created ${ingredients.length} ingredients across both branches.`);
 
     console.log('Database seeding completed successfully.');
     process.exit(0);

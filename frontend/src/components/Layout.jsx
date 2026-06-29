@@ -8,7 +8,8 @@ import {
   Users,
   FileSpreadsheet,
   LogOut,
-  Store
+  Store,
+  Beef
 } from 'lucide-react';
 
 const Layout = () => {
@@ -28,6 +29,7 @@ const Layout = () => {
   const showInventory = user.role === 'SUPER_ADMIN' || user.role === 'ADMIN';
   const showUsers = user.role === 'SUPER_ADMIN' || user.role === 'ADMIN';
   const showAuditLog = user.role === 'SUPER_ADMIN';
+  const showIngredients = user.role === 'SUPER_ADMIN' || user.role === 'ADMIN' || user.hasIngredientsAccess === true;
 
   const navItems = [];
   
@@ -40,6 +42,10 @@ const Layout = () => {
   
   if (showInventory) {
     navItems.push({ to: '/inventory', label: 'Inventory', icon: <Package size={18} /> });
+  }
+  
+  if (showIngredients) {
+    navItems.push({ to: '/ingredients', label: 'Ingredients', icon: <Beef size={18} /> });
   }
   
   if (showUsers) {

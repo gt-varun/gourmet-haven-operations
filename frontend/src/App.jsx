@@ -9,6 +9,7 @@ import POS from './pages/POS';
 import Inventory from './pages/Inventory';
 import Admin from './pages/Admin';
 import AuditLog from './pages/AuditLog';
+import Ingredients from './pages/Ingredients';
 
 // Helper component to redirect authenticated users to their landing page
 const HomeRedirect = () => {
@@ -73,6 +74,16 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={['SUPER_ADMIN', 'ADMIN']}>
                   <Inventory />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Ingredients: ADMIN, SUPER_ADMIN, or CASHIER with toggle access */}
+            <Route
+              path="ingredients"
+              element={
+                <ProtectedRoute allowedRoles={['SUPER_ADMIN', 'ADMIN']} allowIngredientsAccess={true}>
+                  <Ingredients />
                 </ProtectedRoute>
               }
             />

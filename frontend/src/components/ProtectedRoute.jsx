@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 // Protected Route Guard for authenticated pages
-export const ProtectedRoute = ({ children, allowedRoles }) => {
+export const ProtectedRoute = ({ children, allowedRoles, allowIngredientsAccess }) => {
   const { user, loading, isAuthenticated } = useAuth();
 
   if (loading) {
@@ -54,7 +54,12 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
     const minRequiredLevel = Math.min(...allowedRoles.map(role => ROLE_LEVELS[role] || 0));
 
     if (userLevel < minRequiredLevel) {
-      return <Navigate to="/dashboard" replace />;
+      // If cashier but has custom ingredients access, let them pass
+      if (allowIngredientsAccess && user.hasIngredientsAccess === true) {
+        // Proceed to return children
+      } else {
+        return <Navigate to="/dashboard" replace />;
+      }
     }
   }
 

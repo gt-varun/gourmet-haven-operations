@@ -62,9 +62,28 @@ const cacheControl = (req, res, next) => {
   next();
 };
 
+// Check permission for ingredients access
+const checkIngredientsAccess = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ success: false, message: 'Authentication required' });
+  }
+
+  const { role, hasIngredientsAccess } = req.user;
+
+  if (role === 'SUPER_ADMIN' || role === 'ADMIN' || hasIngredientsAccess === true) {
+    return next();
+  }
+
+  return res.status(403).json({
+    success: false,
+    message: 'Access denied: You do not have permission to access ingredients.',
+  });
+};
+
 module.exports = {
   authenticate,
   authorize,
   cacheControl,
+  checkIngredientsAccess,
   ROLE_HIERARCHY,
 };
