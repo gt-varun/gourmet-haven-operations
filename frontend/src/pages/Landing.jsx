@@ -19,7 +19,7 @@ const Landing = () => {
       <div className="landing-card">
         <div className="landing-bg"></div>
         
-        {/* Left Column: Image */}
+        {/* Left Column: Image with Ken Burns zoom load and hover */}
         <div className="landing-photo">
           <img src="/assets/img/social/s62-sourdough.jpg" alt="Fresh artisan sourdough bread" />
         </div>
@@ -61,7 +61,11 @@ const Landing = () => {
           <div className="landing-footer">
             <span>📍 Downtown Bistro & Uptown Café</span>
             <button className="landing-cta" onClick={handleCtaClick}>
-              {isAuthenticated ? 'Go to Portal →' : 'Login / Portal →'}
+              {isAuthenticated ? (
+                <span>Go to Portal <span className="landing-arrow">→</span></span>
+              ) : (
+                <span>Login / Portal <span className="landing-arrow">→</span></span>
+              )}
             </button>
           </div>
         </div>
@@ -96,15 +100,16 @@ const Landing = () => {
           box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 4px 14px rgba(0,0,0,.3);
           display: flex;
           background: #f7ebd5;
-          animation: fadeIn 0.8s ease-out;
+          opacity: 0;
+          animation: cardEntrance 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes cardEntrance {
+          from { opacity: 0; transform: scale(0.96) translateY(20px); }
+          to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* ── Left Column: Full-bleed photo ── */
+        /* ── Left Column: Full-bleed photo with load-zoom and hover transition ── */
         .landing-photo {
           width: 45%;
           height: 100%;
@@ -116,9 +121,18 @@ const Landing = () => {
           height: 100%;
           object-fit: cover;
           display: block;
+          animation: imageLoadZoom 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+          transition: transform 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .landing-photo:hover img {
+          transform: scale(1.05);
+        }
+        @keyframes imageLoadZoom {
+          from { transform: scale(1.12); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
         }
 
-        /* ── Right Column: Content ── */
+        /* ── Right Column: Content with staggered fadeInUp animation ── */
         .landing-right {
           width: 55%;
           height: 100%;
@@ -131,7 +145,7 @@ const Landing = () => {
           z-index: 2;
         }
 
-        /* ── Top Metadata Row ── */
+        /* Staggered entrance for all content elements */
         .landing-top-meta {
           display: flex;
           justify-content: space-between;
@@ -141,6 +155,76 @@ const Landing = () => {
           font-weight: 700;
           letter-spacing: .2em;
           text-transform: uppercase;
+          opacity: 0;
+          animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+        }
+
+        .landing-brand {
+          font-family: 'Caveat', cursive;
+          font-weight: 700;
+          font-size: 42px;
+          color: #e63946;
+          line-height: 1;
+          margin-bottom: 6px;
+          opacity: 0;
+          animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+        }
+
+        .landing-headline {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 900;
+          font-size: 80px;
+          line-height: .92;
+          letter-spacing: -.03em;
+          color: #5a3a1a;
+          margin: 0;
+          opacity: 0;
+          animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+        }
+        .landing-headline em {
+          font-style: italic;
+          color: #e63946;
+        }
+
+        .landing-blurb {
+          font-size: 15px;
+          font-weight: 500;
+          color: #5a3a1a;
+          opacity: 0;
+          margin-top: 14px;
+          margin-bottom: 0;
+          line-height: 1.5;
+          max-width: 90%;
+          animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.6s forwards;
+        }
+
+        .landing-hours-card {
+          margin-top: 24px;
+          background: #fff;
+          border-radius: 16px;
+          padding: 18px 22px;
+          border: 2px dashed rgba(90, 58, 26, 0.3);
+          opacity: 0;
+          animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.7s forwards;
+        }
+
+        .landing-footer {
+          margin-top: 24px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: .18em;
+          text-transform: uppercase;
+          color: #5a3a1a;
+          opacity: 0;
+          animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         /* ── Pulsing "Open now" pill ── */
@@ -168,47 +252,6 @@ const Landing = () => {
           50% { opacity: 0.3; }
         }
 
-        /* ── Typography and Headings ── */
-        .landing-brand {
-          font-family: 'Caveat', cursive;
-          font-weight: 700;
-          font-size: 42px;
-          color: #e63946;
-          line-height: 1;
-          margin-bottom: 6px;
-        }
-        .landing-headline {
-          font-family: 'Poppins', sans-serif;
-          font-weight: 900;
-          font-size: 80px;
-          line-height: .92;
-          letter-spacing: -.03em;
-          color: #5a3a1a;
-          margin: 0;
-        }
-        .landing-headline em {
-          font-style: italic;
-          color: #e63946;
-        }
-        .landing-blurb {
-          font-size: 15px;
-          font-weight: 500;
-          color: #5a3a1a;
-          opacity: .85;
-          margin-top: 14px;
-          margin-bottom: 0;
-          line-height: 1.5;
-          max-width: 90%;
-        }
-
-        /* ── Operating Hours Card ── */
-        .landing-hours-card {
-          margin-top: 24px;
-          background: #fff;
-          border-radius: 16px;
-          padding: 18px 22px;
-          border: 2px dashed rgba(90, 58, 26, 0.3);
-        }
         .landing-hours-label {
           font-size: 11px;
           font-weight: 700;
@@ -233,18 +276,6 @@ const Landing = () => {
         }
 
         /* ── Footer Address and CTA Button ── */
-        .landing-footer {
-          margin-top: 24px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: .18em;
-          text-transform: uppercase;
-          color: #5a3a1a;
-          opacity: .85;
-        }
         .landing-cta {
           background: #e63946;
           color: #fff;
@@ -257,11 +288,21 @@ const Landing = () => {
           cursor: pointer;
           transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
         }
         .landing-cta:hover {
           transform: translateY(-2px);
           box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
           background: #d62b38;
+        }
+        .landing-arrow {
+          display: inline-block;
+          transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .landing-cta:hover .landing-arrow {
+          transform: translateX(4px);
         }
 
         /* ── Responsive Styling ── */
