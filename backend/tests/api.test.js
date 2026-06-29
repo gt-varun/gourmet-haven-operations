@@ -102,13 +102,13 @@ describe('POS & RBAC System Integration Tests', () => {
     expect(res.status).toBe(401);
   });
 
-  test('2. Cashier is blocked from viewing Reports', async () => {
+  test('2. Cashier can view Reports for their branch', async () => {
     const res = await request(app)
       .get('/api/reports/dashboard')
       .set('Cookie', [cashierToken]);
     
-    expect(res.status).toBe(403);
-    expect(res.body.message).toContain('Access denied');
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
   });
 
   test('3. Admin can view Reports for their branch', async () => {

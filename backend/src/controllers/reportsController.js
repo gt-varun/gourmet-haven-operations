@@ -7,12 +7,7 @@ const Product = require('../models/Product');
 // @access  Private (SUPER_ADMIN, ADMIN)
 const getDashboardMetrics = async (req, res) => {
   try {
-    const { role } = req.user;
-
-    // Gating check
-    if (role === 'CASHIER') {
-      return res.status(403).json({ success: false, message: 'Access denied: Cashiers cannot view reports' });
-    }
+    // Scoping check (branchFilter is enforced by middleware)
 
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
