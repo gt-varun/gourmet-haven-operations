@@ -40,7 +40,8 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await res.json();
       if (data.success) {
-        setUser(data.user);
+        // Re-fetch the fully populated user (with branchId populated and hasIngredientsAccess)
+        await verifySession();
         return { success: true };
       } else {
         setError(data.message || 'Login failed');
