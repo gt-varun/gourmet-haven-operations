@@ -16,6 +16,21 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // Background images for dashboard slideshow
+  const bgImages = [
+    '/assets/img/social/s62-sourdough.jpg',
+    '/assets/img/social/s78-baguettes.jpg',
+    '/assets/img/social/s90-vegetables.jpg'
+  ];
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % bgImages.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, [bgImages.length]);
+
   // Fetch branches if SUPER_ADMIN
   const fetchBranches = async () => {
     try {
@@ -63,8 +78,22 @@ const Dashboard = () => {
   }, [fetchMetrics]);
 
   return (
-    <div>
-      <div className="header-container">
+    <div style={{ position: 'relative', minHeight: '100%' }}>
+      {/* Background Slideshow (Faded Out) */}
+      <div className="dashboard-slideshow">
+        {bgImages.map((imgUrl, index) => (
+          <img
+            key={imgUrl}
+            src={imgUrl}
+            alt=""
+            className={`dashboard-slide-img ${index === currentBgIndex ? 'active' : ''}`}
+          />
+        ))}
+        <div className="dashboard-slideshow-overlay"></div>
+      </div>
+
+      <div style={{ position: 'relative', zIndex: 10 }}>
+        <div className="header-container">
         <div>
           <h1 className="header-title">Dashboard</h1>
           <p className="header-subtitle">
@@ -250,7 +279,33 @@ const Dashboard = () => {
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
+        .dashboard-slideshow {
+          position: absolute;
+          inset: -32px;
+          overflow: hidden;
+          z-index: 1;
+        }
+        .dashboard-slide-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0;
+          transform: scale(1.05);
+          transition: opacity 1.8s ease-in-out, transform 3.5s ease-out;
+        }
+        .dashboard-slide-img.active {
+          opacity: 0.07; /* Super subtle background opacity */
+          transform: scale(1);
+        }
+        .dashboard-slideshow-overlay {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, transparent 40%, var(--bg-dark) 100%);
+        }
       `}</style>
+      </div>
     </div>
   );
 };

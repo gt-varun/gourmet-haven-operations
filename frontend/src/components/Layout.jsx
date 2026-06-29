@@ -63,15 +63,15 @@ const Layout = () => {
 
   return (
     <div className="app-container">
-      {/* Sidebar Navigation */}
-      <aside className="sidebar">
-        <div className="logo-container">
-          <div className="logo-icon">H</div>
-          <span className="logo-text">HotelPOS</span>
+      {/* Top Header Navigation Bar */}
+      <header className="top-navbar">
+        <div className="logo-container" onClick={() => navigate('/')}>
+          <div className="logo-icon">★</div>
+          <span className="logo-text">Gourmet Haven</span>
         </div>
 
-        <nav style={{ flexGrow: 1 }}>
-          <ul className="nav-links">
+        <nav>
+          <ul className="top-nav-menu">
             {navItems.map((item) => (
               <li key={item.to} className={`nav-item ${isActive(item.to) ? 'active' : ''}`}>
                 <NavLink to={item.to}>
@@ -83,11 +83,11 @@ const Layout = () => {
           </ul>
         </nav>
 
-        {/* User profile / Logout footer */}
-        <div className="user-profile-widget">
-          <div className="user-info">
-            <span className="user-name">{user.name}</span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginTop: '2px' }}>
+        {/* User profile / Logout Header area */}
+        <div className="top-profile-container">
+          <div className="top-user-info">
+            <span className="top-user-name">{user.name}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span className={`user-role-badge badge-${user.role.toLowerCase()}`}>
                 {user.role.replace('_', ' ')}
               </span>
@@ -100,11 +100,11 @@ const Layout = () => {
             </div>
           </div>
           <button className="btn-logout" onClick={handleLogout}>
-            <LogOut size={16} />
+            <LogOut size={14} />
             <span>Logout</span>
           </button>
         </div>
-      </aside>
+      </header>
 
       {/* Main Panel Content */}
       <main className="main-content">

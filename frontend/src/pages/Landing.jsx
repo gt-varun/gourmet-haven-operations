@@ -31,6 +31,21 @@ const Landing = () => {
 
   return (
     <div className="landing-scroll-container">
+      {/* PUBLIC HEADER NAVBAR (Top-Right Login Align) */}
+      <header className="landing-header-bar">
+        <div className="landing-logo">
+          <span>★ Gourmet Haven</span>
+        </div>
+        <nav className="landing-nav-links">
+          <a href="#story-section">Our Story</a>
+          <a href="#philosophy-section">Philosophy</a>
+          <a href="#specials-section">Specials</a>
+          <button className="landing-nav-login-btn" onClick={handleCtaClick}>
+            {isAuthenticated ? 'Go to Portal →' : 'Login / Portal →'}
+          </button>
+        </nav>
+      </header>
+
       {/* SECTION 1: HERO SPOTLIGHT (1600x900 Split Card) */}
       <div className="landing-stage">
         <div className="landing-card">
@@ -97,7 +112,7 @@ const Landing = () => {
       </div>
 
       {/* SECTION 2: BRAND STORY & HERITAGE */}
-      <section className="landing-details-section">
+      <section id="story-section" className="landing-details-section">
         <div className="landing-details-container">
           <div className="landing-section-header">
             <h2 className="landing-section-title">Our Heritage & Craft</h2>
@@ -125,8 +140,8 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* SECTION 3: CRAFTSMANSHIP HIGHLIGHTS (4 Cards Grid) */}
-      <section className="landing-details-section" style={{ background: '#fef8f0' }}>
+      {/* SECTION 3: CRAFTSMANSHIP HIGHLIGHTS (4 Cards Grid - No Hover Tilt) */}
+      <section id="philosophy-section" className="landing-details-section" style={{ background: '#fef8f0' }}>
         <div className="landing-details-container">
           <div className="landing-section-header">
             <h2 className="landing-section-title">Our Baking Philosophy</h2>
@@ -162,8 +177,8 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* SECTION 4: WEEKLY SPECIALS SHOWCASE (3 Product Cards) */}
-      <section className="landing-details-section">
+      {/* SECTION 4: WEEKLY SPECIALS SHOWCASE (3 Product Cards - No Hover Tilt) */}
+      <section id="specials-section" className="landing-details-section">
         <div className="landing-details-container">
           <div className="landing-section-header">
             <h2 className="landing-section-title">Weekly Specials</h2>
@@ -238,6 +253,10 @@ const Landing = () => {
       </footer>
 
       <style>{`
+        html {
+          scroll-behavior: smooth;
+        }
+
         /* ── Scroll Container stage ── */
         .landing-scroll-container {
           background: #fffbf5;
@@ -250,10 +269,69 @@ const Landing = () => {
           -webkit-font-smoothing: antialiased;
         }
 
+        /* ── Sticky Public Header Navbar ── */
+        .landing-header-bar {
+          position: sticky;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 70px;
+          background: rgba(255, 251, 245, 0.95);
+          backdrop-filter: blur(8px);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 40px;
+          border-bottom: 1px solid #e8dcc8;
+          z-index: 1000;
+          box-shadow: 0 4px 20px rgba(90, 58, 26, 0.03);
+          box-sizing: border-box;
+        }
+        .landing-logo {
+          font-family: 'Poppins', sans-serif;
+          font-weight: 800;
+          font-size: 20px;
+          color: #5a3a1a;
+        }
+        .landing-nav-links {
+          display: flex;
+          align-items: center;
+          gap: 24px;
+        }
+        .landing-nav-links a {
+          font-size: 14px;
+          font-weight: 600;
+          color: #8a6e54;
+          text-decoration: none;
+          transition: color 0.25s ease;
+        }
+        .landing-nav-links a:hover {
+          color: #e63946;
+        }
+        .landing-nav-login-btn {
+          background: #e63946;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 99px;
+          font-size: 13px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
+        }
+        .landing-nav-login-btn:hover {
+          background: #d62b38;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 15px rgba(230, 57, 70, 0.3);
+        }
+
         /* ── Fullscreen Hero Section ── */
         .landing-stage {
           width: 100%;
-          height: 100vh;
+          height: calc(100vh - 70px);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -485,6 +563,7 @@ const Landing = () => {
           background: #fffbf5;
           display: flex;
           justify-content: center;
+          box-sizing: border-box;
         }
         .landing-details-container {
           width: 100%;
@@ -572,7 +651,7 @@ const Landing = () => {
           margin-top: 6px;
         }
 
-        /* ── Philosophy 4-Card Grid ── */
+        /* ── Philosophy 4-Card Grid (No hover tilt) ── */
         .landing-philosophy-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -583,14 +662,14 @@ const Landing = () => {
           border-radius: 16px;
           padding: 32px 24px;
           border: 1px solid #e8dcc8;
-          box-shadow: 0 4px 20px rgba(253, 180, 75, 0.05);
+          box-shadow: 0 4px 20px rgba(90, 58, 26, 0.05);
           transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
           text-align: center;
         }
         .philosophy-card:hover {
-          transform: translateY(-8px) rotate(1deg);
-          box-shadow: 0 12px 30px rgba(253, 180, 75, 0.22);
-          border-color: #fdb44b;
+          transform: translateY(-8px); /* Lift only, no tilt */
+          box-shadow: 0 12px 30px rgba(90, 58, 26, 0.12);
+          border-color: #e63946;
         }
         .philosophy-icon {
           font-size: 40px;
@@ -611,7 +690,7 @@ const Landing = () => {
           margin: 0;
         }
 
-        /* ── Specials 3-Card Grid ── */
+        /* ── Specials 3-Card Grid (No hover tilt) ── */
         .landing-specials-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -622,15 +701,15 @@ const Landing = () => {
           border-radius: 16px;
           overflow: hidden;
           border: 1px solid #e8dcc8;
-          box-shadow: 0 4px 20px rgba(253, 180, 75, 0.05);
+          box-shadow: 0 4px 20px rgba(90, 58, 26, 0.05);
           transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
           display: flex;
           flex-direction: column;
         }
         .special-card:hover {
-          transform: translateY(-8px) rotate(1deg);
-          box-shadow: 0 12px 30px rgba(253, 180, 75, 0.22);
-          border-color: #fdb44b;
+          transform: translateY(-8px); /* Lift only, no tilt */
+          box-shadow: 0 12px 30px rgba(90, 58, 26, 0.12);
+          border-color: #e63946;
         }
         .special-card-image {
           position: relative;
@@ -644,7 +723,7 @@ const Landing = () => {
           transition: transform 0.6s ease;
         }
         .special-card:hover .special-card-image img {
-          transform: scale(1.1) rotate(1deg);
+          transform: scale(1.1); /* Zoom only, no rotate */
         }
         .special-badge {
           position: absolute;
@@ -706,7 +785,7 @@ const Landing = () => {
           color: #e63946;
         }
         .special-btn {
-          background: #fdb44b;
+          background: #e63946;
           color: white;
           border: none;
           padding: 8px 16px;
@@ -717,7 +796,7 @@ const Landing = () => {
           transition: background 0.25s ease;
         }
         .special-btn:hover {
-          background: #ff9f43;
+          background: #d62b38;
         }
 
         /* ── Simple footer ── */
@@ -732,6 +811,12 @@ const Landing = () => {
 
         /* ── Responsive Styling ── */
         @media (max-width: 1024px) {
+          .landing-header-bar {
+            padding: 0 20px;
+          }
+          .landing-nav-links {
+            gap: 12px;
+          }
           .landing-card {
             max-height: none;
             height: auto;
@@ -747,7 +832,7 @@ const Landing = () => {
           }
           .landing-stage {
             height: auto;
-            min-height: 100vh;
+            min-height: calc(100vh - 70px);
             padding: 10px;
           }
           .landing-headline {
