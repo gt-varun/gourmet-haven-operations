@@ -13,11 +13,6 @@ import Ingredients from './pages/Ingredients';
 
 // Helper component to redirect authenticated users to their landing page
 const HomeRedirect = () => {
-  const { user } = useAuth();
-  
-  if (user?.role === 'CASHIER') {
-    return <Navigate to="/pos" replace />;
-  }
   return <Navigate to="/dashboard" replace />;
 };
 
@@ -48,11 +43,11 @@ function App() {
             {/* Landing page router */}
             <Route index element={<HomeRedirect />} />
 
-            {/* Dashboard: ADMIN or SUPER_ADMIN */}
+            {/* Dashboard: All authenticated users */}
             <Route
               path="dashboard"
               element={
-                <ProtectedRoute allowedRoles={['SUPER_ADMIN', 'ADMIN']}>
+                <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
               }

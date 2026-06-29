@@ -6,7 +6,7 @@ const branchScope = require('../middleware/branchScope');
 const router = express.Router();
 
 router.use(authenticate);
-router.use(authorize('ADMIN')); // Only ADMIN and SUPER_ADMIN have access to reports
+router.use(authorize('CASHIER')); // Allows all roles (CASHIER, ADMIN, SUPER_ADMIN)
 
 // Scoped dashboard metrics
 router.get('/dashboard', branchScope, getDashboardMetrics);

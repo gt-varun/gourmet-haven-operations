@@ -25,7 +25,7 @@ const Layout = () => {
   if (!user) return null;
 
   // Determine allowed links based on role hierarchy
-  const showDashboard = user.role === 'SUPER_ADMIN' || user.role === 'ADMIN';
+  const showDashboard = true; // All authenticated users have dashboard access
   const showInventory = user.role === 'SUPER_ADMIN' || user.role === 'ADMIN';
   const showUsers = user.role === 'SUPER_ADMIN' || user.role === 'ADMIN';
   const showAuditLog = user.role === 'SUPER_ADMIN';

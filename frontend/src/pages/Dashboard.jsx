@@ -159,7 +159,10 @@ const Dashboard = () => {
             <div className="alert-banner alert-banner-warning">
               <AlertTriangle size={20} style={{ flexShrink: 0 }} />
               <div>
-                <strong>Low Stock Alert:</strong> {metrics.lowStockCount} products are running low on inventory. Please review and restock them from the Inventory tab.
+                <strong>Low Stock Alert:</strong> {metrics.lowStockCount} products are running low on inventory.
+                {user.role === 'CASHIER'
+                  ? ' Please inform the branch manager to restock them.'
+                  : ' Please review and restock them from the Inventory tab.'}
               </div>
             </div>
           )}
