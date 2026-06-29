@@ -452,21 +452,6 @@ const Admin = () => {
                 </div>
               </div>
 
-              {userForm.role === 'CASHIER' && (
-                <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '10px', marginTop: '6px' }}>
-                  <input
-                    type="checkbox"
-                    id="hasIngredientsAccessAdd"
-                    checked={userForm.hasIngredientsAccess}
-                    onChange={(e) => setUserForm({ ...userForm, hasIngredientsAccess: e.target.checked })}
-                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-                  />
-                  <label htmlFor="hasIngredientsAccessAdd" style={{ cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}>
-                    Grant Ingredients Access Permission
-                  </label>
-                </div>
-              )}
-
               <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: '16px' }}>
                 Create Account
               </button>
@@ -550,21 +535,6 @@ const Admin = () => {
                       ))}
                     </select>
                   </div>
-                </div>
-              )}
-
-              {userForm.role === 'CASHIER' && (
-                <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '10px', marginTop: '12px', marginBottom: '16px' }}>
-                  <input
-                    type="checkbox"
-                    id="hasIngredientsAccessEdit"
-                    checked={userForm.hasIngredientsAccess}
-                    onChange={(e) => setUserForm({ ...userForm, hasIngredientsAccess: e.target.checked })}
-                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-                  />
-                  <label htmlFor="hasIngredientsAccessEdit" style={{ cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}>
-                    Grant Ingredients Access Permission
-                  </label>
                 </div>
               )}
 
