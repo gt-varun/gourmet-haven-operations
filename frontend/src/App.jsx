@@ -10,6 +10,7 @@ import Inventory from './pages/Inventory';
 import Admin from './pages/Admin';
 import AuditLog from './pages/AuditLog';
 import Ingredients from './pages/Ingredients';
+import Landing from './pages/Landing';
 
 // Helper component to redirect authenticated users to their landing page
 const HomeRedirect = () => {
@@ -21,6 +22,9 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          {/* Public Landing Page */}
+          <Route path="/" element={<Landing />} />
+
           {/* Public Login Route */}
           <Route
             path="/login"
@@ -33,15 +37,12 @@ function App() {
 
           {/* Secure Layout Routes */}
           <Route
-            path="/"
             element={
               <ProtectedRoute>
                 <Layout />
               </ProtectedRoute>
             }
           >
-            {/* Landing page router */}
-            <Route index element={<HomeRedirect />} />
 
             {/* Dashboard: All authenticated users */}
             <Route
