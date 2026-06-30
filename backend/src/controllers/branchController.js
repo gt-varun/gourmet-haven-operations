@@ -33,10 +33,24 @@ const createBranch = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Branch name is required' });
     }
 
+    // Single-business system fallback: fetch the first Business if not in user context
+    let businessId = req.user.businessId;
+    if (!businessId) {
+      const Business = require('../models/Business');
+      const business = await Business.findOne();
+      if (business) {
+        businessId = business._id;
+      }
+    }
+
+    if (!businessId) {
+      return res.status(400).json({ success: false, message: 'No business group found to link this branch' });
+    }
+
     const branch = await Branch.create({
       name,
       location,
-      businessId: req.user.businessId || null, // If business context is needed, we link it
+      businessId,
     });
 
     return res.status(201).json({ success: true, branch });

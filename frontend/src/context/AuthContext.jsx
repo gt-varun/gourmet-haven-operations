@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -53,14 +53,49 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
       setUser(null);
     } catch (err) {
       console.error('Logout error:', err);
     }
-  };
+  }, []);
+
+  // Idle session timeout logic (FR-5)
+  useEffect(() => {
+    if (!user) return;
+
+    let idleTimer;
+    const timeoutDuration = 15 * 60 * 1000; // 15 minutes
+
+    const resetTimer = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        console.warn('Session idle timeout. Auto logging out.');
+        logout();
+      }, timeoutDuration);
+    };
+
+    // Events that signify user activity
+    const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart', 'mousemove'];
+
+    // Initialize timer
+    resetTimer();
+
+    // Bind event listeners to DOM
+    activityEvents.forEach((event) => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    // Cleanup listeners and timers
+    return () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      activityEvents.forEach((event) => {
+        window.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [user, logout]);
 
   return (
     <AuthContext.Provider

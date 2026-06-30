@@ -192,4 +192,36 @@ describe('POS & RBAC System Integration Tests', () => {
     // We created 1 successful order in test 5, none should be created here
     expect(ordersCount).toBe(1);
   });
+
+  test('8. Branch creation: Super Admin can create a branch, Admin/Cashier are blocked', async () => {
+    // Create a business group first (needed for the test DB)
+    const Business = require('../src/models/Business');
+    await Business.create({ name: 'Test Business Group' });
+
+    // Super Admin attempts to create a branch
+    const createRes = await request(app)
+      .post('/api/branches')
+      .set('Cookie', [superToken])
+      .send({ name: 'New Dynamic Branch', location: '789 East Blvd' });
+
+    expect(createRes.status).toBe(201);
+    expect(createRes.body.success).toBe(true);
+    expect(createRes.body.branch.name).toBe('New Dynamic Branch');
+
+    // Admin attempts to create a branch
+    const adminCreateRes = await request(app)
+      .post('/api/branches')
+      .set('Cookie', [adminToken])
+      .send({ name: 'Admin Attempt Branch' });
+
+    expect(adminCreateRes.status).toBe(403);
+
+    // Cashier attempts to create a branch
+    const cashierCreateRes = await request(app)
+      .post('/api/branches')
+      .set('Cookie', [cashierToken])
+      .send({ name: 'Cashier Attempt Branch' });
+
+    expect(cashierCreateRes.status).toBe(403);
+  });
 });
