@@ -21,6 +21,23 @@ const Landing = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Cycling words and bounce-fade animation logic for Gourmet bakes/brews/plates/treats
+  const words = ['bakes,', 'brews,', 'plates,', 'treats,'];
+  const [wordIndex, setWordIndex] = React.useState(0);
+  const [fadeProp, setFadeProp] = React.useState('fade-in');
+
+  React.useEffect(() => {
+    const wordTimeout = setInterval(() => {
+      setFadeProp('fade-out');
+      setTimeout(() => {
+        setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+        setFadeProp('fade-in');
+      }, 500); // 500ms transition time
+    }, 3500); // changes every 3.5 seconds
+
+    return () => clearInterval(wordTimeout);
+  }, []);
+
   const handleCtaClick = () => {
     if (isAuthenticated) {
       navigate('/dashboard');
@@ -73,7 +90,7 @@ const Landing = () => {
             <div className="landing-brand">— Gourmet Haven —</div>
             
             <h1 className="landing-headline">
-              Gourmet bakes,<br />
+              Gourmet <span className={`headline-changing-word ${fadeProp}`}>{words[wordIndex]}</span><br />
               <em>every</em> morning.
             </h1>
             
@@ -476,6 +493,21 @@ const Landing = () => {
             transform: scale(1.03);
             text-shadow: 0 4px 15px rgba(230, 57, 70, 0.2);
           }
+        }
+
+        .headline-changing-word {
+          display: inline-block;
+          color: #5a3a1a;
+          transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          transform-origin: bottom center;
+        }
+        .headline-changing-word.fade-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        .headline-changing-word.fade-out {
+          opacity: 0;
+          transform: translateY(-15px) scale(0.9);
         }
 
         .landing-blurb {
