@@ -13,7 +13,6 @@ A production-grade, multi-branch Point of Sale (POS) and Inventory Management we
 ## Core Features
 
 - **Premium Branding & Aesthetics**: Beautiful warm-cream theme, signature cursive `— Gourmet Haven —` lettering, and smooth Ken Burns zoom slideshow transitions.
-- **100% Mobile Responsive**: Stacks welcome cards vertically on narrow devices and packs links into a swipeable horizontal ribbon with hidden scrollbars for native-app feels.
 - **Branch-Scoped Data Isolation**: Automatic middleware isolation ensuring cashiers and administrators can only access logs and catalog items corresponding to their specific branch.
 - **ACID-Compliant POS Checkout**: Atomic MongoDB transactions locking stock levels upon checkout, with complete automatic rollback safety on void actions.
 - **Immutable Ledger Audit Logs**: Secure, chronological record keeping for sensitive actions like voids, restocks, privilege adjustments, and discount overrides.
