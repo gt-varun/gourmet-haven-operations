@@ -35,9 +35,9 @@ const Admin = () => {
   });
 
   // Fetch users
-  const fetchUsers = useCallback(async () => {
+  const fetchUsers = useCallback(async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       setError('');
       const res = await fetch('/api/users');
       const data = await res.json();
@@ -49,7 +49,7 @@ const Admin = () => {
     } catch (err) {
       setError('Connection to backend failed');
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, []);
 
@@ -183,6 +183,13 @@ const Admin = () => {
 
   // Inline toggle ingredients access for a cashier
   const handleToggleIngredients = async (userId, currentValue) => {
+    // Optimistically toggle permission locally in state first for smooth UI update
+    setUsers((prevUsers) =>
+      prevUsers.map((u) =>
+        u._id === userId ? { ...u, hasIngredientsAccess: !currentValue } : u
+      )
+    );
+
     try {
       const res = await fetch(`/api/users/${userId}`, {
         method: 'PUT',
@@ -191,11 +198,24 @@ const Admin = () => {
       });
       const data = await res.json();
       if (data.success) {
-        fetchUsers();
+        // Silently reload in the background to ensure sync with server
+        fetchUsers(true);
       } else {
+        // Rollback state if query failed
+        setUsers((prevUsers) =>
+          prevUsers.map((u) =>
+            u._id === userId ? { ...u, hasIngredientsAccess: currentValue } : u
+          )
+        );
         alert(data.message || 'Error toggling permission');
       }
     } catch (err) {
+      // Rollback state on network error
+      setUsers((prevUsers) =>
+        prevUsers.map((u) =>
+          u._id === userId ? { ...u, hasIngredientsAccess: currentValue } : u
+        )
+      );
       alert('Network error');
     }
   };
