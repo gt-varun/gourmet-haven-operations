@@ -99,6 +99,7 @@ const seedData = async () => {
         stock: 50,
         reorderLevel: 10,
         category: 'Appetizers',
+        imageUrl: '/assets/img/social/truffle-fries.jpg',
         branchId: branch1._id,
       },
       {
@@ -109,6 +110,7 @@ const seedData = async () => {
         stock: 30,
         reorderLevel: 8,
         category: 'Main Course',
+        imageUrl: '/assets/img/social/classic-margherita-pizza.jpg',
         branchId: branch1._id,
       },
       {
@@ -119,6 +121,7 @@ const seedData = async () => {
         stock: 15,
         reorderLevel: 5,
         category: 'Desserts',
+        imageUrl: '/assets/img/social/chocolate-fudge-brownie.jpg',
         branchId: branch1._id,
       },
       {
@@ -129,6 +132,7 @@ const seedData = async () => {
         stock: 8, // Low stock (below threshold 10)
         reorderLevel: 10,
         category: 'Beverages',
+        imageUrl: '/assets/img/social/craft-beer.jpg',
         branchId: branch1._id,
       },
     ];
@@ -143,6 +147,7 @@ const seedData = async () => {
         stock: 40,
         reorderLevel: 10,
         category: 'Breakfast',
+        imageUrl: '/assets/img/social/s62-sourdough.jpg',
         branchId: branch2._id,
       },
       {
@@ -153,6 +158,7 @@ const seedData = async () => {
         stock: 100,
         reorderLevel: 15,
         category: 'Beverages',
+        imageUrl: '/assets/img/social/s78-baguettes.jpg',
         branchId: branch2._id,
       },
       {
@@ -163,6 +169,7 @@ const seedData = async () => {
         stock: 4, // Low stock (below threshold 10)
         reorderLevel: 10,
         category: 'Bakery',
+        imageUrl: '/assets/img/social/s78-baguettes.jpg',
         branchId: branch2._id,
       },
       {
@@ -173,6 +180,7 @@ const seedData = async () => {
         stock: 25,
         reorderLevel: 5,
         category: 'Main Course',
+        imageUrl: '/assets/img/social/s90-vegetables.jpg',
         branchId: branch2._id,
       },
     ];

@@ -39,19 +39,7 @@ const Login = () => {
     setLoading(false);
 
     if (result.success) {
-      // Re-fetch user to check role for redirection
-      const userRes = await fetch('/api/auth/me');
-      const userData = await userRes.json();
-      
-      if (userData.success && userData.user) {
-        if (userData.user.role === 'CASHIER') {
-          navigate('/pos');
-        } else {
-          navigate('/dashboard');
-        }
-      } else {
-        navigate('/pos');
-      }
+      navigate('/dashboard');
     } else {
       setFormError(result.message || 'Invalid email or password.');
     }
@@ -74,24 +62,22 @@ const Login = () => {
 
       <div className="login-card glass-panel" style={{ zIndex: 10, background: '#ffffff', boxShadow: '0 20px 50px rgba(90, 58, 26, 0.15)' }}>
         <div className="login-header">
-          <div style={{
-            width: '52px',
-            height: '52px',
-            background: 'var(--gradient-accent)',
-            borderRadius: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            fontWeight: 700,
-            fontSize: '28px',
-            margin: '0 auto 16px auto',
-            boxShadow: '0 8px 24px var(--primary-glow)'
-          }}>
-            H
+          <div 
+            onClick={() => navigate('/')}
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontWeight: 800,
+              fontSize: '24px',
+              color: '#5a3a1a',
+              margin: '0 auto 12px auto',
+              textAlign: 'center',
+              cursor: 'pointer'
+            }}
+          >
+            ★ Gourmet Haven
           </div>
-          <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-main)' }}>Welcome Back</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '6px' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text-main)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Poppins', sans-serif" }}>Welcome Back</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '4px', fontWeight: 600 }}>
             POS & Inventory Management Platform
           </p>
         </div>

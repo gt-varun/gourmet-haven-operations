@@ -8,6 +8,13 @@ import {
   Store
 } from 'lucide-react';
 
+const welcomeImages = [
+  '/assets/img/social/df-dining.jpg',
+  '/assets/img/social/df-kitchen-chefs.jpg',
+  '/assets/img/social/df-workstation.jpg',
+  '/assets/img/social/df-live-cooking.jpg'
+];
+
 const Dashboard = () => {
   const { user } = useAuth();
   const [metrics, setMetrics] = useState(null);
@@ -15,21 +22,29 @@ const Dashboard = () => {
   const [selectedBranch, setSelectedBranch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  // Background images for dashboard slideshow
-  const bgImages = [
-    '/assets/img/social/s62-sourdough.jpg',
-    '/assets/img/social/s78-baguettes.jpg',
-    '/assets/img/social/s90-vegetables.jpg'
-  ];
-  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentBgIndex((prev) => (prev + 1) % bgImages.length);
-    }, 5500);
+      setCurrentImageIndex((prev) => (prev + 1) % welcomeImages.length);
+    }, 4000);
     return () => clearInterval(timer);
-  }, [bgImages.length]);
+  }, []);
+
+  const getRoleDescription = (role) => {
+    switch (role) {
+      case 'SUPER_ADMIN':
+        return 'You have global administrative access to view and manage all outlet branches, assign staff permissions, monitor global inventory stock levels, audit ingredient levels, and view sensitive system logs.';
+      case 'ADMIN':
+        return 'You have administrative access to view local branch statistics, manage inventory catalog, update ingredient stock, and update local branch staff accounts.';
+      case 'CASHIER':
+        return 'You have access to checkout transactions at the POS Billing Terminal, process customers orders, and check real-time product stock counts.';
+      default:
+        return 'You have basic access to the operations portal dashboard.';
+    }
+  };
+
+
 
   // Fetch branches if SUPER_ADMIN
   const fetchBranches = async () => {
@@ -77,25 +92,74 @@ const Dashboard = () => {
     fetchMetrics();
   }, [fetchMetrics]);
 
+  const handleScrollToMetrics = () => {
+    const element = document.getElementById('metrics-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div style={{ position: 'relative', minHeight: '100%' }}>
-      {/* Background Slideshow (Faded Out) */}
-      <div className="dashboard-slideshow">
-        {bgImages.map((imgUrl, index) => (
-          <img
-            key={imgUrl}
-            src={imgUrl}
-            alt=""
-            className={`dashboard-slide-img ${index === currentBgIndex ? 'active' : ''}`}
-          />
-        ))}
-        <div className="dashboard-slideshow-overlay"></div>
+    <div style={{ position: 'relative', minHeight: '100%', zIndex: 1 }}>
+      {/* SECTION 1: Welcome Spotlight Hero Card (Solid Borders) */}
+      <div className="dashboard-welcome-hero welcome-hero-container">
+        <div className="glass-panel welcome-hero-panel">
+          
+          {/* Left Column: Rotating Slideshow (Zoom-Fade) */}
+          <div className="landing-photo welcome-hero-slideshow">
+            {welcomeImages.map((imgSrc, idx) => (
+              <img
+                key={imgSrc}
+                src={imgSrc}
+                alt="DineFine showcase"
+                className={idx === currentImageIndex ? 'active' : ''}
+              />
+            ))}
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent, rgba(255, 251, 245, 0.08))', zIndex: 2 }}></div>
+          </div>
+          
+          {/* Right Column: Welcome message */}
+          <div className="welcome-hero-content">
+            <div style={{ fontFamily: "'Caveat', cursive", fontSize: '32px', color: '#e63946', marginBottom: '8px', fontWeight: 700 }}>
+              — Gourmet Haven Group —
+            </div>
+
+            <h1 className="welcome-hero-title">
+              Welcome back, <br />
+              <span style={{ color: '#e63946', fontStyle: 'italic' }}>{user.role.replace('_', ' ')}</span>.
+            </h1>
+            <p style={{ fontSize: '22px', fontWeight: 700, marginTop: '12px', color: '#5a3a1a' }}>
+              {user.name}
+            </p>
+            <p style={{ fontSize: '15px', color: '#8a6e54', marginTop: '14px', lineHeight: 1.6, maxWidth: '90%' }}>
+              {getRoleDescription(user.role)}
+            </p>
+            
+            {/* Scroll Down Arrow */}
+            <div
+              onClick={handleScrollToMetrics}
+              className="scroll-down-prompt-global"
+              style={{
+                position: 'absolute',
+                bottom: '30px',
+                left: '50%',
+                transform: 'translateX(-50%)'
+              }}
+            >
+              <span>Explore Metrics</span>
+              <span>↓</span>
+            </div>
+          </div>
+          
+        </div>
       </div>
 
-      <div style={{ position: 'relative', zIndex: 10 }}>
+      {/* Target Metrics Section */}
+      <div id="metrics-section" style={{ paddingTop: '20px' }}>
         <div className="header-container">
         <div>
-          <h1 className="header-title">Dashboard</h1>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: '22px', color: '#e63946', marginBottom: '-2px', fontWeight: 700 }}>— Gourmet Haven —</div>
+          <h1 className="header-title" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}>Dashboard</h1>
           <p className="header-subtitle">
             {user.role === 'SUPER_ADMIN' ? 'Global insights across outlets' : `Outlets overview for ${user.branchId?.name}`}
           </p>
@@ -132,8 +196,8 @@ const Dashboard = () => {
           <div style={{
             width: '32px',
             height: '32px',
-            border: '3px solid rgba(255,255,255,0.1)',
-            borderTopColor: '#5d6eff',
+            border: '3px solid rgba(90, 58, 26, 0.1)',
+            borderTopColor: '#e63946',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }} />
@@ -147,8 +211,8 @@ const Dashboard = () => {
         <>
           {/* Metrics summary cards */}
           <div className="metrics-grid">
-            <div className="glass-card metric-card">
-              <div className="metric-icon" style={{ background: 'rgba(93, 110, 255, 0.15)', color: '#5d6eff' }}>
+            <div className="dashed-card metric-card">
+              <div className="metric-icon" style={{ background: 'rgba(230, 57, 70, 0.08)', color: '#e63946' }}>
                 <TrendingUp size={24} />
               </div>
               <div className="metric-info">
@@ -157,8 +221,8 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="glass-card metric-card">
-              <div className="metric-icon" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
+            <div className="dashed-card metric-card">
+              <div className="metric-icon" style={{ background: 'rgba(16, 185, 129, 0.08)', color: '#10b981' }}>
                 <ShoppingBag size={24} />
               </div>
               <div className="metric-info">
@@ -167,16 +231,16 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="glass-card metric-card">
+            <div className="dashed-card metric-card">
               <div className="metric-icon" style={{
-                background: metrics.lowStockCount > 0 ? 'rgba(251, 191, 36, 0.15)' : 'rgba(255,255,255,0.05)',
-                color: metrics.lowStockCount > 0 ? '#fbbf24' : 'var(--text-muted)'
+                background: metrics.lowStockCount > 0 ? 'rgba(217, 119, 6, 0.08)' : 'rgba(90, 58, 26, 0.05)',
+                color: metrics.lowStockCount > 0 ? '#d97706' : 'var(--text-muted)'
               }}>
                 <AlertTriangle size={24} />
               </div>
               <div className="metric-info">
                 <span className="metric-label">Low Stock Items</span>
-                <span className="metric-value" style={{ color: metrics.lowStockCount > 0 ? '#fbbf24' : 'white' }}>
+                <span className="metric-value" style={{ color: metrics.lowStockCount > 0 ? '#d97706' : 'var(--text-main)' }}>
                   {metrics.lowStockCount}
                 </span>
               </div>
@@ -275,37 +339,12 @@ const Dashboard = () => {
           </div>
         </>
       ) : null}
+      </div>
       <style>{`
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
-        .dashboard-slideshow {
-          position: absolute;
-          inset: -32px;
-          overflow: hidden;
-          z-index: 1;
-        }
-        .dashboard-slide-img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          opacity: 0;
-          transform: scale(1.05);
-          transition: opacity 1.8s ease-in-out, transform 3.5s ease-out;
-        }
-        .dashboard-slide-img.active {
-          opacity: 0.07; /* Super subtle background opacity */
-          transform: scale(1);
-        }
-        .dashboard-slideshow-overlay {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at center, transparent 40%, var(--bg-dark) 100%);
-        }
       `}</style>
-      </div>
     </div>
   );
 };

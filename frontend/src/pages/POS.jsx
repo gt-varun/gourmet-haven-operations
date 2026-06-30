@@ -223,7 +223,8 @@ const POS = () => {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div className="header-container" style={{ marginBottom: '16px' }}>
         <div>
-          <h1 className="header-title">POS Billing</h1>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: '22px', color: '#e63946', marginBottom: '-2px', fontWeight: 700 }}>— Gourmet Haven —</div>
+          <h1 className="header-title" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}>POS Billing</h1>
           <p className="header-subtitle">Select items to add to the order</p>
         </div>
       </div>
@@ -293,31 +294,45 @@ const POS = () => {
                   style={{
                     opacity: isOutOfStock ? 0.5 : 1,
                     pointerEvents: isOutOfStock ? 'none' : 'auto',
-                    border: isLowStock ? '1px solid rgba(251, 191, 36, 0.4)' : '1px solid var(--border-glow)'
+                    border: isLowStock ? '1.5px dashed rgba(217, 119, 6, 0.4)' : '1px solid var(--border-glow)'
                   }}
                   onClick={() => addToCart(p)}
                 >
-                  <div>
-                    <div className="product-name">{p.name}</div>
-                    <div className="product-sku">{p.sku}</div>
+                  {/* Card Image */}
+                  <div style={{ height: '110px', width: '100%', overflow: 'hidden', background: '#f7ebd5', position: 'relative' }}>
+                    {p.imageUrl ? (
+                      <img src={p.imageUrl} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                    ) : (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-muted)', fontSize: '24px', fontWeight: 'bold', fontFamily: 'var(--font-heading)' }}>
+                        ★
+                      </div>
+                    )}
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                    <span className="product-price">₹{p.price.toFixed(2)}</span>
+                  {/* Card Details */}
+                  <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flexGrow: 1, width: '100%', boxSizing: 'border-box' }}>
                     <div>
-                      {isOutOfStock ? (
-                        <span className="product-stock-tag" style={{ background: 'rgba(248, 113, 113, 0.15)', color: '#f87171' }}>
-                          Out of stock
-                        </span>
-                      ) : isLowStock ? (
-                        <span className="product-stock-tag" style={{ background: 'rgba(251, 191, 36, 0.15)', color: '#fbbf24' }}>
-                          Low stock ({p.stock})
-                        </span>
-                      ) : (
-                        <span className="product-stock-tag" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#34d399' }}>
-                          Stock: {p.stock}
-                        </span>
-                      )}
+                      <div className="product-name" style={{ fontSize: '13px', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', margin: 0 }}>{p.name}</div>
+                      <div className="product-sku" style={{ fontSize: '10px', color: 'var(--text-muted)', margin: 0 }}>{p.sku}</div>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
+                      <span className="product-price" style={{ fontSize: '14px', fontWeight: 800, color: 'var(--primary)', marginTop: 0 }}>₹{p.price.toFixed(2)}</span>
+                      <div>
+                        {isOutOfStock ? (
+                          <span className="product-stock-tag" style={{ background: 'rgba(230, 57, 70, 0.08)', color: '#e63946', fontSize: '9px', padding: '2px 6px' }}>
+                            Out of stock
+                          </span>
+                        ) : isLowStock ? (
+                          <span className="product-stock-tag" style={{ background: 'rgba(217, 119, 6, 0.08)', color: '#d97706', fontSize: '9px', padding: '2px 6px' }}>
+                            Low ({p.stock})
+                          </span>
+                        ) : (
+                          <span className="product-stock-tag" style={{ background: 'rgba(16, 185, 129, 0.08)', color: '#10b981', fontSize: '9px', padding: '2px 6px' }}>
+                            {p.stock} units
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -327,7 +342,7 @@ const POS = () => {
         </div>
 
         {/* Right Side: Cart Summary */}
-        <div className="cart-panel glass-panel" style={{ padding: '20px' }}>
+        <div className="cart-panel dashed-card" style={{ padding: '20px' }}>
           <div className="panel-header" style={{ marginBottom: '12px' }}>
             <h3 className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <ShoppingCart size={18} />
@@ -440,9 +455,9 @@ const POS = () => {
                     style={{
                       flexGrow: 1,
                       justifyContent: 'center',
-                      background: paymentMethod === method ? 'rgba(93, 110, 255, 0.15)' : 'rgba(255,255,255,0.02)',
+                      background: paymentMethod === method ? 'var(--primary)' : '#ffffff',
                       borderColor: paymentMethod === method ? 'var(--primary)' : 'var(--border-glow)',
-                      color: paymentMethod === method ? 'white' : 'var(--text-muted)'
+                      color: paymentMethod === method ? '#ffffff' : 'var(--text-muted)'
                     }}
                     onClick={() => setPaymentMethod(method)}
                     disabled={cart.length === 0}

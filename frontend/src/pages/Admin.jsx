@@ -206,7 +206,8 @@ const Admin = () => {
     <div>
       <div className="header-container">
         <div>
-          <h1 className="header-title">Staff Management</h1>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: '22px', color: '#e63946', marginBottom: '-2px', fontWeight: 700 }}>— Gourmet Haven —</div>
+          <h1 className="header-title" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}>Staff Management</h1>
           <p className="header-subtitle">Create and configure user roles and permissions</p>
         </div>
 
@@ -248,8 +249,8 @@ const Admin = () => {
           <div style={{
             width: '32px',
             height: '32px',
-            border: '3px solid rgba(255,255,255,0.1)',
-            borderTopColor: '#5d6eff',
+            border: '3px solid rgba(90, 58, 26, 0.1)',
+            borderTopColor: '#e63946',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }} />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import {
-  Beef,
   PlusCircle,
   Edit2,
   Trash2,
@@ -181,7 +180,8 @@ const Ingredients = () => {
     <div>
       <div className="header-container">
         <div>
-          <h1 className="header-title">Ingredients stock</h1>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: '22px', color: '#e63946', marginBottom: '-2px', fontWeight: 700 }}>— Gourmet Haven —</div>
+          <h1 className="header-title" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}>Ingredients Stock</h1>
           <p className="header-subtitle">Manage ingredients stock levels for the kitchen</p>
         </div>
 
@@ -239,8 +239,8 @@ const Ingredients = () => {
           <div style={{
             width: '32px',
             height: '32px',
-            border: '3px solid rgba(255,255,255,0.1)',
-            borderTopColor: '#5d6eff',
+            border: '3px solid rgba(90, 58, 26, 0.1)',
+            borderTopColor: '#e63946',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }} />
@@ -267,20 +267,17 @@ const Ingredients = () => {
                 <tr key={ing._id}>
                   <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>{idx + 1}</td>
                   <td>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Beef size={16} style={{ color: 'var(--primary)' }} />
-                      <strong>{ing.name}</strong>
-                    </div>
+                    <strong>{ing.name}</strong>
                   </td>
                   <td style={{ textAlign: 'center' }}>
                     <span
                       style={{
                         fontWeight: 'bold',
-                        color: ing.quantity === 0 ? '#f87171' : '#f3f4f6',
-                        background: ing.quantity === 0 ? 'rgba(248,113,113,0.1)' : 'rgba(255,255,255,0.03)',
+                        color: ing.quantity === 0 ? '#e63946' : '#10b981',
+                        background: ing.quantity === 0 ? 'rgba(230, 57, 70, 0.08)' : 'rgba(16, 185, 129, 0.08)',
                         padding: '4px 10px',
                         borderRadius: '6px',
-                        border: ing.quantity === 0 ? '1px solid rgba(248,113,113,0.2)' : '1px solid var(--border-glow)'
+                        border: ing.quantity === 0 ? '1px solid rgba(230, 57, 70, 0.2)' : '1px solid rgba(16, 185, 129, 0.2)'
                       }}
                     >
                       {ing.quantity}

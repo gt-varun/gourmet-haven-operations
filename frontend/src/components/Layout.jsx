@@ -17,6 +17,20 @@ const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const bgImages = [
+    '/assets/img/social/s62-sourdough.jpg',
+    '/assets/img/social/s78-baguettes.jpg',
+    '/assets/img/social/s90-vegetables.jpg'
+  ];
+  const [currentBgIndex, setCurrentBgIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % bgImages.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleLogout = async () => {
     await logout();
     navigate('/login');
@@ -63,6 +77,18 @@ const Layout = () => {
 
   return (
     <div className="app-container">
+      {/* Global Background Slideshow (Faded Brand Watermark) */}
+      <div className="layout-slideshow">
+        {bgImages.map((imgUrl, index) => (
+          <img
+            key={imgUrl}
+            src={imgUrl}
+            alt=""
+            className={`layout-slide-img ${index === currentBgIndex ? 'active' : ''}`}
+          />
+        ))}
+        <div className="layout-slideshow-overlay"></div>
+      </div>
       {/* Top Header Navigation Bar */}
       <header className="top-navbar">
         <div className="logo-container" onClick={() => navigate('/')}>

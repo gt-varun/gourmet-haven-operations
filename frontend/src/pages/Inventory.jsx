@@ -38,6 +38,7 @@ const Inventory = () => {
     stock: 0,
     reorderLevel: 10,
     category: '',
+    imageUrl: '',
     branchId: '',
   });
 
@@ -90,9 +91,10 @@ const Inventory = () => {
       stock: 0,
       reorderLevel: 10,
       category: '',
+      imageUrl: '',
       branchId: user.role === 'SUPER_ADMIN' ? '' : user.branchId?._id || '',
     });
-    setCheckoutError('');
+    setError(''); // Preserving original clear errors logic
     setShowAddModal(true);
   };
 
@@ -106,6 +108,7 @@ const Inventory = () => {
       taxRate: product.taxRate,
       reorderLevel: product.reorderLevel,
       category: product.category,
+      imageUrl: product.imageUrl || '',
     });
     setShowEditModal(true);
   };
@@ -219,7 +222,8 @@ const Inventory = () => {
     <div>
       <div className="header-container">
         <div>
-          <h1 className="header-title">Inventory Catalog</h1>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: '22px', color: '#e63946', marginBottom: '-2px', fontWeight: 700 }}>— Gourmet Haven —</div>
+          <h1 className="header-title" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}>Inventory Catalog</h1>
           <p className="header-subtitle">Manage products, pricing, and stock replenishment</p>
         </div>
 
@@ -253,10 +257,6 @@ const Inventory = () => {
           <button
             className={`filter-chip ${selectedFilter === 'LOW' ? 'active' : ''}`}
             onClick={() => setSelectedFilter('LOW')}
-            style={{
-              borderColor: selectedFilter === 'LOW' ? 'var(--warning)' : 'var(--border-glow)',
-              color: selectedFilter === 'LOW' ? 'white' : 'var(--text-muted)'
-            }}
           >
             Low Stock Watchlist
           </button>
@@ -280,8 +280,8 @@ const Inventory = () => {
           <div style={{
             width: '32px',
             height: '32px',
-            border: '3px solid rgba(255,255,255,0.1)',
-            borderTopColor: '#5d6eff',
+            border: '3px solid rgba(90, 58, 26, 0.1)',
+            borderTopColor: '#e63946',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }} />
@@ -313,7 +313,18 @@ const Inventory = () => {
                 return (
                   <tr key={p._id}>
                     <td><code>{p.sku}</code></td>
-                    <td><strong>{p.name}</strong></td>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ width: '36px', height: '36px', borderRadius: '8px', overflow: 'hidden', background: '#f7ebd5', flexShrink: 0, border: '1px solid #e8dcc8' }}>
+                          {p.imageUrl ? (
+                            <img src={p.imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '14px' }}>🍳</div>
+                          )}
+                        </div>
+                        <strong>{p.name}</strong>
+                      </div>
+                    </td>
                     <td>{p.category}</td>
                     <td style={{ textAlign: 'right', fontWeight: '500' }}>₹{p.price.toFixed(2)}</td>
                     <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>{p.taxRate}%</td>
@@ -321,11 +332,11 @@ const Inventory = () => {
                       <span
                         style={{
                           fontWeight: 'bold',
-                          color: isLowStock ? '#fbbf24' : '#10b981',
-                          background: isLowStock ? 'rgba(251,191,36,0.1)' : 'rgba(16,185,129,0.1)',
+                          color: isLowStock ? '#d97706' : '#10b981',
+                          background: isLowStock ? 'rgba(217, 119, 6, 0.08)' : 'rgba(16, 185, 129, 0.08)',
                           padding: '4px 8px',
                           borderRadius: '6px',
-                          border: isLowStock ? '1px solid rgba(251,191,36,0.2)' : '1px solid rgba(16,185,129,0.2)'
+                          border: isLowStock ? '1px solid rgba(217, 119, 6, 0.15)' : '1px solid rgba(16, 185, 129, 0.15)'
                         }}
                       >
                         {p.stock}
@@ -409,6 +420,17 @@ const Inventory = () => {
                     required
                   />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Product Image URL</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. /assets/img/social/truffle-fries.jpg"
+                  value={prodForm.imageUrl}
+                  onChange={(e) => setProdForm({ ...prodForm, imageUrl: e.target.value })}
+                />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -529,6 +551,16 @@ const Inventory = () => {
                     required
                   />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Product Image URL</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={prodForm.imageUrl}
+                  onChange={(e) => setProdForm({ ...prodForm, imageUrl: e.target.value })}
+                />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>

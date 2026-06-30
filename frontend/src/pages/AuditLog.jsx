@@ -82,17 +82,17 @@ const AuditLog = () => {
   const getActionBadgeClass = (action) => {
     switch (action) {
       case 'INVENTORY_RESTOCK':
-        return { bg: 'rgba(16, 185, 129, 0.15)', color: '#34d399', text: 'Restock' };
+        return { bg: 'rgba(16, 185, 129, 0.08)', color: '#10b981', text: 'Restock' };
       case 'ORDER_VOID':
-        return { bg: 'rgba(248, 113, 113, 0.15)', color: '#f87171', text: 'Order Void' };
+        return { bg: 'rgba(230, 57, 70, 0.08)', color: '#e63946', text: 'Order Void' };
       case 'DISCOUNT_OVERRIDE':
-        return { bg: 'rgba(251, 191, 36, 0.15)', color: '#fbbf24', text: 'Discount Apply' };
+        return { bg: 'rgba(217, 119, 6, 0.08)', color: '#d97706', text: 'Discount Apply' };
       case 'USER_CREATE':
-        return { bg: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', text: 'Staff Join' };
+        return { bg: 'rgba(29, 78, 216, 0.08)', color: '#1d4ed8', text: 'Staff Join' };
       case 'ROLE_CHANGE':
-        return { bg: 'rgba(139, 92, 246, 0.15)', color: '#a78bfa', text: 'Privilege Alter' };
+        return { bg: 'rgba(109, 40, 217, 0.08)', color: '#6d28d9', text: 'Privilege Alter' };
       default:
-        return { bg: 'rgba(255,255,255,0.05)', color: 'white', text: action };
+        return { bg: 'rgba(90, 58, 26, 0.08)', color: 'var(--text-main)', text: action };
     }
   };
 
@@ -100,7 +100,8 @@ const AuditLog = () => {
     <div>
       <div className="header-container">
         <div>
-          <h1 className="header-title">Audit Logs</h1>
+          <div style={{ fontFamily: "'Caveat', cursive", fontSize: '22px', color: '#e63946', marginBottom: '-2px', fontWeight: 700 }}>— Gourmet Haven —</div>
+          <h1 className="header-title" style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}>Audit Logs</h1>
           <p className="header-subtitle">Immutable chronological ledger of sensitive operations (SUPER_ADMIN only)</p>
         </div>
 
@@ -169,8 +170,8 @@ const AuditLog = () => {
           <div style={{
             width: '32px',
             height: '32px',
-            border: '3px solid rgba(255,255,255,0.1)',
-            borderTopColor: '#5d6eff',
+            border: '3px solid rgba(90, 58, 26, 0.1)',
+            borderTopColor: '#e63946',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite'
           }} />
@@ -202,6 +203,8 @@ const AuditLog = () => {
                     <td>
                       <span
                         style={{
+                          display: 'inline-block',
+                          whiteSpace: 'nowrap',
                           fontSize: '11px',
                           fontWeight: 'bold',
                           padding: '4px 8px',

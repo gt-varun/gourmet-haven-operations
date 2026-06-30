@@ -107,6 +107,22 @@ const Landing = () => {
                 )}
               </button>
             </div>
+
+            {/* Bouncing Scroll Down Prompt */}
+            <div
+              onClick={() => document.getElementById('story-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="scroll-down-prompt-global"
+              style={{
+                position: 'absolute',
+                bottom: '24px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 10
+              }}
+            >
+              <span>Discover More</span>
+              <span>↓</span>
+            </div>
           </div>
         </div>
       </div>
@@ -863,6 +879,40 @@ const Landing = () => {
           .landing-story-block {
             flex-direction: column;
             gap: 30px;
+          }
+        }
+
+        @media (max-width: 500px) {
+          .landing-headline {
+            font-size: 36px;
+          }
+          .landing-subtitle {
+            font-size: 15px;
+          }
+          .landing-photo {
+            height: 250px;
+          }
+          .landing-right {
+            padding: 30px 20px;
+          }
+          .landing-header-bar {
+            flex-direction: column;
+            height: auto;
+            padding: 16px;
+            gap: 12px;
+          }
+          .landing-nav-links {
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+          }
+          .landing-footer {
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 16px !important;
+            text-align: center !important;
+            margin-bottom: 60px !important;
           }
         }
       `}</style>

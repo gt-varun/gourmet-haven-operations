@@ -44,6 +44,10 @@ const productSchema = new mongoose.Schema(
       ref: 'Branch',
       required: true,
     },
+    imageUrl: {
+      type: String,
+      default: '',
+    },
     isDeleted: {
       type: Boolean,
       default: false,
