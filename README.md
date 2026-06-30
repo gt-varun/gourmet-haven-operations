@@ -57,6 +57,11 @@ Use the following seeded accounts to verify the security permissions and view re
 | `uptown.admin@gourmethaven.com` | `ADMIN` | Uptown Café | Manage inventory refills, products, and cashiers for Uptown Café. |
 | `uptown.cashier@gourmethaven.com` | `CASHIER` | Uptown Café | Handle cashier operations and bill prints for Uptown Café. |
 
+## Production Deployments
+
+- **Frontend Application (Vercel)**: [https://gourmet-haven-operations.vercel.app/](https://gourmet-haven-operations.vercel.app/)
+- **Backend API Server (Render)**: [https://gourmet-haven-operations.onrender.com](https://gourmet-haven-operations.onrender.com)
+
 ---
 
 ## How to Run Locally
