@@ -1,7 +1,7 @@
-# ✦ Gourmet Haven Operations Platform ✦
+# Gourmet Haven Operations Platform
 
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=react&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
@@ -10,17 +10,17 @@ A production-grade, multi-branch Point of Sale (POS) and Inventory Management we
 
 ---
 
-## 🌟 Core Features
+## Core Features
 
-- ⚜️ **Premium Branding & Aesthetics**: Beautiful warm-cream theme, signature cursive `— Gourmet Haven —` lettering, and smooth Ken Burns zoom slideshow transitions.
-- 📱 **100% Mobile Responsive**: Stacks welcome cards vertically on narrow devices and packs links into a swipeable horizontal ribbon with hidden scrollbars for native-app feels.
-- 🔒 **Branch-Scoped Data Isolation**: Automatic middleware isolation ensuring cashiers and administrators can only access logs and catalog items corresponding to their specific branch.
-- 🛒 **ACID-Compliant POS Checkout**: Atomic MongoDB transactions locking stock levels upon checkout, with complete automatic rollback safety on void actions.
-- 📑 **Immutable Ledger Audit Logs**: Secure, chronological record keeping for sensitive actions like voids, restocks, privilege adjustments, and discount overrides.
+- **Premium Branding & Aesthetics**: Beautiful warm-cream theme, signature cursive `— Gourmet Haven —` lettering, and smooth Ken Burns zoom slideshow transitions.
+- **100% Mobile Responsive**: Stacks welcome cards vertically on narrow devices and packs links into a swipeable horizontal ribbon with hidden scrollbars for native-app feels.
+- **Branch-Scoped Data Isolation**: Automatic middleware isolation ensuring cashiers and administrators can only access logs and catalog items corresponding to their specific branch.
+- **ACID-Compliant POS Checkout**: Atomic MongoDB transactions locking stock levels upon checkout, with complete automatic rollback safety on void actions.
+- **Immutable Ledger Audit Logs**: Secure, chronological record keeping for sensitive actions like voids, restocks, privilege adjustments, and discount overrides.
 
 ---
 
-## 📐 System Architecture
+## System Architecture
 
 The following diagram outlines the data flow between the single-page application, security middleware layers, and the MongoDB Replica Set:
 
@@ -35,7 +35,7 @@ graph TD
 
 ---
 
-## 📁 Repository Directory Structure
+## Repository Directory Structure
 
 ```bash
 ├── /backend            # Express API server, db models, routes, and controllers
@@ -46,13 +46,13 @@ graph TD
 
 ---
 
-## 🔑 Default Seeded Credentials
+## Default Seeded Credentials
 
 Use the following seeded accounts to verify the security permissions and view restrictions (all accounts use password **`Password123`**):
 
 | Staff Account (Actor) | Role | Branch Assignment | Permitted Operations |
 | :--- | :--- | :--- | :--- |
-| `superadmin@gourmethaven.com` | `SUPER_ADMIN` | *Global* (All) | View all branches, access full audit ledger logs, edit staff accounts. |
+| `superadmin@gourmethaven.com` | `SUPER_ADMIN` | Global (All) | View all branches, access full audit ledger logs, edit staff accounts. |
 | `downtown.admin@gourmethaven.com` | `ADMIN` | Downtown Bistro | Restock Downtown ingredients, edit catalog products, manage Downtown cashiers. |
 | `downtown.cashier@gourmethaven.com` | `CASHIER` | Downtown Bistro | Run POS terminal transactions, apply up to 10% discounts, print bills. |
 | `uptown.admin@gourmethaven.com` | `ADMIN` | Uptown Café | Manage inventory refills, products, and cashiers for Uptown Café. |
@@ -60,10 +60,10 @@ Use the following seeded accounts to verify the security permissions and view re
 
 ---
 
-## 🚀 How to Run Locally
+## How to Run Locally
 
 ### 1. Pre-requisites
-Make sure **Node.js** (v18+) and **MongoDB** are installed on your machine.
+Make sure Node.js (v18+) and MongoDB are installed on your machine.
 
 ### 2. Start the Database in Replica Set Mode
 Because this platform utilizes MongoDB ACID Transactions (required for atomic stock changes), a replica set is required. Execute the helper script to initialize a local `rs0` replica instance:
@@ -92,7 +92,7 @@ Visit `http://localhost:5173` in your browser.
 
 ---
 
-## 🧪 Running Integration Tests
+## Running Integration Tests
 
 To run the automated suite verifying RBAC scopes, branch isolation, and checkout rollbacks:
 ```bash
