@@ -3,15 +3,13 @@ import { useAuth } from '../context/AuthContext';
 import {
   UserPlus,
   UserCheck,
-  ShieldCheck,
   ShieldAlert,
   Trash2,
   Edit2,
   RefreshCw,
   Search,
   X,
-  Store,
-  Beef
+  Store
 } from 'lucide-react';
 
 const Admin = () => {

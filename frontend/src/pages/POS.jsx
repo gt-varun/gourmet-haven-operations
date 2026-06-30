@@ -7,7 +7,6 @@ import {
   Minus,
   Plus,
   Percent,
-  CreditCard,
   Printer,
   X,
   AlertTriangle,
