@@ -66,7 +66,15 @@ const AuditLog = () => {
         if (meta.action === 'DEACTIVATE') {
           return `Deactivated staff account for '${meta.email}'.`;
         }
-        return `Changed role of '${meta.email}' from '${meta.oldRole}' to '${meta.newRole}'.`;
+        if (meta.action === 'GRANT_INGREDIENTS') {
+          return `Granted custom ingredients access to Cashier '${meta.email}'.`;
+        }
+        if (meta.action === 'REVOKE_INGREDIENTS') {
+          return `Revoked custom ingredients access from Cashier '${meta.email}'.`;
+        }
+        const oldR = (meta.oldRole || '').replace('_', ' ');
+        const newR = (meta.newRole || '').replace('_', ' ');
+        return `Changed role of '${meta.email}' from '${oldR}' to '${newR}'.`;
       case 'ORDER_VOID':
         return `Voided invoice #${(log.entityId || '').toString().slice(-6).toUpperCase()} (Refunded: ₹${Number(meta.grandTotal).toFixed(2)} | Reason: "${meta.voidReason}").`;
       case 'INVENTORY_RESTOCK':
